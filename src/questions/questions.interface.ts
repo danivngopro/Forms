@@ -15,11 +15,11 @@ export interface Answer {
   answer: string;
 }
 
-enum QuestionType {
+export enum QuestionType {
   shortAnswer = 'shortAnswer',
-  LongAnswer = 'LongAnswer',
+  longAnswer = 'longAnswer',
   radio = 'radio',
-  tickable = 'tickable',
+  checkbox = 'checkbox',
   select = 'select',
   title = 'title',
 }

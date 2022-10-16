@@ -1,35 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { QuestionRepository } from './questions.repository';
-import { question } from './questions.interface';
-import { default as axios } from 'axios';
-
+import { Question, Survey } from './questions.interface';
 export class QuestionManager {
-  static async create(newQuestion: question): Promise<question> {
-    return QuestionRepository.create(newQuestion);
+  static async createSurvey(surveyName: string, content: Array<Question>): Promise<Survey> {
+    return QuestionRepository.createSurvey(surveyName, content);
+  }
+  
+  static async updateSurvey(surveyId: string, surveyName: string, content: Array<Question>): Promise<Survey | null> {
+    return QuestionRepository.updateSurvey(surveyId, surveyName, content);
   }
 
-  static async addUsers(
-    questionId: string,
-    status: boolean,
-  ): Promise<string> {
-    try {
-      if (!status) console.log('question already exist');
-      else {
-        const question = await QuestionRepository.findQuestion(questionId);
-        axios.put('http://130.87.164.152/question/user', {
-          id: questionId,
-          type: 'AddToDistributionQuestion',
-          data: {
-            questionId: question?.questionId,
-            userId: question?.members
-              .map((member) => member.toLowerCase())
-              .join(';'),
-          },
-        });
-      }
-    } catch (err) {
-      console.log(err);
-    }
-    return '';
+  static async getSurvey(surveyId: string): Promise<Survey | null> {
+    return QuestionRepository.getSurvey(surveyId);
+  }
+  
+  static async deleteSurvey(surveyId: string): Promise<Survey | null> {
+    return QuestionRepository.deleteSurvey(surveyId);
   }
 }

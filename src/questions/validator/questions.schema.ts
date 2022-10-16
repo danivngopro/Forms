@@ -1,25 +1,47 @@
 import * as Joi from 'joi';
+import { QuestionType } from '../questions.interface';
 
 const questionschema = Joi.object({
-  questionId: Joi.string().default(''),
-  members: Joi.array(),
+  surveyId: Joi.string(),
+  surveyName: Joi.string().optional(),
+  content: Joi.array().items(Joi.object({
+    questionName: Joi.string(),
+    questionType: Joi.string().valid(...Object.values(QuestionType)),
+    answers: Joi.array().items(Joi.object({
+      answer: Joi.string(),
+    })),
+  })),
 });
 
-export const createQuestionReqSchema = Joi.object({
+const surveySchema = Joi.object({
+  surveyName: Joi.string(),
+  content: Joi.array().items(Joi.object({
+    questionName: Joi.string(),
+    questionType: Joi.string().valid(...Object.values(QuestionType)),
+    answers: Joi.array().items(Joi.object({
+      answer: Joi.string(),
+    })),
+  })),
+});
+
+const surveyId = Joi.object({
+  id: Joi.string(),
+});
+
+export const createSurveyReqSchema = Joi.object({
+  body: surveySchema,
+  query: {},
+  params: {},
+});
+
+export const addQuestionReqSchema = Joi.object({
   body: questionschema,
   query: {},
   params: {},
 });
 
-const question = Joi.object({
-  RequestID: Joi.string().default(''),
-  Status: Joi.boolean().default(false),
-  ErrorID: Joi.string().default('').allow(null, ''),
-});
-
-export const getQuestion = Joi.object({
-  body: question,
+export const getSurveyReqSchema = Joi.object({
+  body: {},
   query: {},
-  params: {},
+  params: surveyId,
 });
-

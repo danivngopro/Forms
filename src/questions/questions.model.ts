@@ -1,17 +1,66 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
 import * as mongoose from 'mongoose';
-import { question } from './questions.interface';
+import { QuestionType, Survey } from './questions.interface';
 
-const questionschema: mongoose.Schema = new mongoose.Schema({
-  questionId: {
+const answerSchema: mongoose.Schema = new mongoose.Schema({
+  answer: {
+    type: String,
+  },
+  connectedAt: {
+    type: Date,
+  },
+}, {
+  toJSON: {
+    virtuals: true,
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    transform(_doc, ret) {
+      delete ret._id;
+    },
+  },
+  versionKey: false,
+  id: true,
+});
+
+const questionSchema: mongoose.Schema = new mongoose.Schema({
+  questionName: {
+    type: String,
+  },
+  questionType: {
+    type: String,
+    enum: QuestionType,
+    required: true,
+  },
+  answers: {
+    type: [answerSchema], 
+    required: true,
+    id: true,
+  },
+  connectedAt: {
+    type: Date,
+  },
+}, {
+  toJSON: {
+    virtuals: true,
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    transform(_doc, ret) {
+      delete ret._id;
+    },
+  },
+  versionKey: false,
+  id: true,
+});
+
+const surveySchema: mongoose.Schema = new mongoose.Schema({
+  surveyName: {
     type: String,
     required: true,
     unique: true,
   },
-  members: {
-    type: Array,
+  content: {
+    type: [questionSchema],
     required: true,
+    id: true,
   },
   connectedAt: {
     type: Date,
@@ -29,6 +78,6 @@ const questionschema: mongoose.Schema = new mongoose.Schema({
   timestamps: { createdAt: true, updatedAt: false },
 });
 
-questionschema.index({ firstName: 1, lastName: 1 });
+surveySchema.index({ firstName: 1, lastName: 1 });
 
-export const QuestionModel = mongoose.model<question & mongoose.Document>('question', questionschema);
+export const QuestionModel = mongoose.model<Survey & mongoose.Document>('Survey', surveySchema);
