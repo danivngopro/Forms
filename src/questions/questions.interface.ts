@@ -1,5 +1,6 @@
 export interface Survey {
   id?: string;
+  creatorId: string;
   surveyName: string;
   content: Array<Question>;
 }

@@ -28,6 +28,11 @@ const surveyId = Joi.object({
   id: Joi.string(),
 });
 
+const questionId = Joi.object({
+  surveyId: Joi.string(),
+  questionId: Joi.string(),
+});
+
 export const createSurveyReqSchema = Joi.object({
   body: surveySchema,
   query: {},
@@ -44,4 +49,10 @@ export const getSurveyReqSchema = Joi.object({
   body: {},
   query: {},
   params: surveyId,
+});
+
+export const getQuestionReqSchema = Joi.object({
+  body: {},
+  query: questionId,
+  params: {},
 });

@@ -6,7 +6,7 @@ dotenv.config();
 export const config = {
   server: {
     name: 'Questions-crud',
-    port: env.get('APPLICATION_PORT').default(3001).asPortNumber(),
+    port: env.get('APPLICATION_PORT').default(3000).asPortNumber(),
   },
   db: {
     connectionString: env.get('DB_CONNECTION_URL')
