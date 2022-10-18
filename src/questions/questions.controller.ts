@@ -43,4 +43,14 @@ export class QuestionController {
       ),
     );
   }
+
+  static async updateQuestion(req: Request, res: Response): Promise<void> {
+    res.json(
+      await QuestionManager.updateQuestion(
+        req.query.surveyId as string,
+        req.query.questionId as string,
+        req.body.content,
+      ),
+    );
+  }
 }

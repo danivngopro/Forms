@@ -21,6 +21,17 @@ export class QuestionRepository {
     ).exec();
   }
 
+  static updateSurveyWithoutName(
+    surveyId: string,
+    content: Array<Question>,
+  ): Promise<Survey | null> {
+    return QuestionModel.findByIdAndUpdate(
+      surveyId,
+      { $push: { content: content } },
+      { new: true },
+    ).exec();
+  }
+
   static getSurvey(surveyId: string): Promise<Survey | null> {
     return QuestionModel.findById(surveyId).exec();
   }
@@ -41,12 +52,4 @@ export class QuestionRepository {
       { new: true },
     ).exec();
   }
-
-  // static removeQuestion(questionId: string): Promise<Question | null> {
-  //   return QuestionModel.findByIdAndDelete(questionId).exec();
-  // }
-
-  // static findQuestion(questionId: string): Promise<Question | null> {
-  //   return QuestionModel.findById(questionId).exec();
-  // }
 }

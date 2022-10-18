@@ -3,7 +3,7 @@ import { wrapAsync } from '../utils/wrapper';
 import { ValidateRequest } from '../utils/joi';
 import { QuestionController } from './questions.controller';
 import {
-  createSurveyReqSchema, addQuestionReqSchema, getSurveyReqSchema, getQuestionReqSchema,
+  createSurveyReqSchema, addQuestionReqSchema, getSurveyReqSchema, getQuestionReqSchema, updateQuestionReqSchema,
 } from './validator/questions.schema';
 
 const QuestionRouter: Router = Router();
@@ -15,6 +15,7 @@ QuestionRouter.delete('/deleteSurvey/id/:id', ValidateRequest(getSurveyReqSchema
 
 QuestionRouter.get('/getQuestion', ValidateRequest(getQuestionReqSchema), wrapAsync(QuestionController.getQuestion));
 QuestionRouter.delete('/deleteQuestion', ValidateRequest(getQuestionReqSchema), wrapAsync(QuestionController.deleteQuestion));
+QuestionRouter.put('/updateQuestion', ValidateRequest(updateQuestionReqSchema), wrapAsync(QuestionController.updateQuestion));
 
 
 export { QuestionRouter };

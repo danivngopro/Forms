@@ -56,3 +56,9 @@ export const getQuestionReqSchema = Joi.object({
   query: questionId,
   params: {},
 });
+
+export const updateQuestionReqSchema = Joi.object({
+  body: questionschema,
+  query: questionId,
+  params: {},
+});

@@ -14,6 +14,8 @@ export class QuestionManager {
     surveyName: string,
     content: Array<Question>,
   ): Promise<Survey | null> {
+    if (!surveyName)
+      return QuestionRepository.updateSurveyWithoutName(surveyId, content);
     return QuestionRepository.updateSurvey(surveyId, surveyName, content);
   }
 
@@ -47,8 +49,20 @@ export class QuestionManager {
     surveyId: string,
     questionId: string,
   ): Promise<Survey | null> {
-    const question = await this.getQuestion(surveyId, questionId) as unknown as Question;
+    const question = (await this.getQuestion(
+      surveyId,
+      questionId,
+    )) as unknown as Question;
     if (!question) return null;
     return QuestionRepository.deleteQuestion(surveyId, question);
+  }
+
+  static async updateQuestion(
+    surveyId: string,
+    questionId: string,
+    content: Array<Question>,
+  ): Promise<Survey | null> {
+    (await this.deleteQuestion(surveyId, questionId)) as unknown as Question;
+    return QuestionRepository.updateSurveyWithoutName(surveyId, content);
   }
 }
