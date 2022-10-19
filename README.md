@@ -59,7 +59,6 @@ post a survey
 
 #### example
 ```typescript
-"status": "200 OK"
 {
     "surveyName": "are you ok",
     "content": [
