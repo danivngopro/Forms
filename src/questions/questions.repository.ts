@@ -4,9 +4,10 @@ import { QuestionModel } from './questions.model';
 export class QuestionRepository {
   static createSurvey(
     surveyName: string,
+    creatorId: string,
     content: Array<Question>,
   ): Promise<Survey> {
-    return QuestionModel.create({ surveyName, content } as Survey);
+    return QuestionModel.create({ surveyName, creatorId, content } as Survey);
   }
 
   static updateSurvey(

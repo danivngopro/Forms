@@ -5,18 +5,21 @@
     - [Run](#run)
 - [Usage](#usage)
     - [HTTP paths](#http-paths)
-    - [get a question](#army-id)
-    - [get a question's auth](#validate-question)
-    - [Post a new question](#/)
-    - [update a question](#army-id)
+    - [get a question](#question-id#survey-id)
+    - [delete a question](#question-id#survey-id)
+    - [update a question](#question-id#survey-id)
+    - [create-survey](#survey)
+    - [get-survey](#survey-id)
+    - [update-survey](#survey-id#new-content)
+    - [delete-survey](#survey-id)
 
 ## Full Setup
 ### Installation
 
 ```bash
-git clone https://gitlab.com/yesodot/selenium/apollo/sociometry/sociometry-ui.git
+git clone https://github.com/danivngopro/Forms.git
 
-cd question-crud
+cd forms/questions
 
 npm install
 ```
@@ -24,104 +27,179 @@ npm install
 ### Run 
 
 ```bash
-npm start
+docker-compose up --build -d
 ```
 
 ## Usage
 #### HTTP paths 
 
 | METHOD | ENDPOINT                                                         | DESCRIPTION                                       |
-| ------ | :----------------------------------------------------------------| :----------------------------------------------    |
-| Post   |  create                                                          | create a question                                          |
-| Put    |  updateByquestionname                                                  | update a question                                      |
-| Get    |  getByquestionname                                                     | get by army id                                     |
-| Get    |  validateQuestion                                                | get auth by army id                                     |
+| ------ | :----------------------------------------------------------------| :----------------------------------------------   |
+| Post   |  createSurvey                                                    | create a survey                                   |
+| Put    |  updateSurvey                                                    | update a survey                                   |
+| Put    |  updateQuestion                                                  | update a question                                 |
+| Get    |  getSurvey                                                       | get a survey by survey id                         |
+| Get    |  getQuestion                                                     | get question by question id                       |
+| delete |  deleteSurvey                                                    | delete survey by survey id                        |
+| delete |  deleteQuestion                                                  | get question by question id                       |
 
 **-------------------------------------------------------------------------------------------------------------------------------------**
 
-### create
-post a question
+### createSurvey
+post a survey
 #### Paramters
-| Name   | Type   | Description                                                    |
-| questionname  | string | army id of the question  |
-| firstName  | string | first name of the question  |
-| lastName  | string | lastname of the question  |
-| permissions  | permissionType | basic, mada or segel  |
-| validationQuestion  | {string, string} | the question and the anwer of the question  |
+| Name         | Type            | Description                                                    |
+| surveyName   | string          | the name of the survey                                         |
+| creatorId    | string          | id of the creator of the survey                                |
+| content      | Array<Question> | array of all the questions and possible answers in the survey  |
+| questionName | string          | the name of the question                                       |
+| questionType | enum            | the type of the question                                       |
+| answers      | string          | possible answer to a specific question                         |
 
-#### Response
+
+#### example
 ```typescript
 "status": "200 OK"
 {
-    "questionname": "8599492",
-    "firstName": "string",
-    "lastName": "string",
-    "permissions": ["QUESTION1"],
-    "validationQuestion": {
-        "question": "MADA",
-        "answer": "string"
-  }
+    "surveyName": "are you ok",
+    "content": [
+        {
+            "questionName": "who are you doing",
+            "questionType": "select",
+            "answers": [
+                {
+                    "answer": "good"
+                }
+            ]
+        }
+    ]
 }
 ```
 **-----------------------------------------------------------------------------------------------------------------------------------------**
-### getByquestionname
-get a question
+### updateSurvey
+update a survey
 #### Paramters
-| Name   | Type   | Description                                                    |
-| questionname  | string | the questionname of the question in the params |
+| Name         | Type            | Description                                                    |
+| surveyId     | string          | the id of the survey                                           |
+| surveyName   | string          | new name for the survey                                        |
+| content      | Array<Question> | array of all the questions and possible answers in the survey  |
+| questionName | string          | the name of the question                                       |
+| questionType | enum            | the type of the question                                       |
+| answers      | string          | possible answer to a specific question                         |
 
-#### Response
+#### example
 ```typescript
-"status": "200 OK"
 {
-    "questionname": "8599492",
-    "firstName": "string",
-    "lastName": "string",
-    "permissions": ["QUESTION1"],
-    "validationQuestion": {
-        "question": "MADA",
-        "answer": "string"
-  }
+    "surveyId": "634e8da60c68790b062e0cfa",
+    "surveyName": "are you ok updated 13243244",
+    "content": [
+        {
+            "questionName": "whats your favorite proccessor?",
+            "questionType": "radio",
+            "answers": [
+                {
+                    "answer": "ryzen 9"
+                },
+                {
+                    "answer": "i9"
+                },
+                {
+                    "answer": "i3"
+                },
+                {
+                    "answer": "none of the above"
+                }
+            ]
+        }
+    ]
 }
 ```
 **-----------------------------------------------------------------------------------------------------------------------------------------**
-
-### updateByquestionname
+### updateQuestion
 update a question
 #### Paramters
-| Name   | Type   | Description                                                    |
-| questionname  | string | army id of the question  |
-| firstName  | string | first name of the question  |
-| lastName  | string | lastname of the question  |
-| permissions  | permissionType | basic, mada or segel  |
-| validationQuestion  | {string, string} | the question and the anwer of the question  |
+| Name         | Type            | Description                                                    |
+| surveyId     | string          | the id of the survey                                           |
+| questionId   | string          | id of the question                                             |
+| content      | Array<Question> | array of all the questions and possible answers in the survey  |
+| questionName | string          | the name of the question                                       |
+| questionType | enum            | the type of the question                                       |
+| answers      | string          | possible answer to a specific question                         |
 
-#### Response
+#### example
 ```typescript
-"status": "200 OK"
+/updateQuestion?surveyId=634e8da60c68790b062e0cfa&questionId=634e91ace51401496e873714
 {
-    "questionname": "8599492",
-    "firstName": "string",
-    "lastName": "string",
-    "permissions": ["QUESTION1"],
-    "validationQuestion": {
-        "question": "MADA",
-        "answer": "string"
-  }
+    "content": [
+        {
+            "questionName": "daniel was here",
+            "questionType": "radio",
+            "answers": [
+                {
+                    "answer": "ydfdfdfdfes ofcourse he is11"
+                },
+                {
+                    "answer": "nodfdfdfdf he i"
+                }
+            ]
+        }
+    ]
 }
 ```
 **-----------------------------------------------------------------------------------------------------------------------------------------**
-### validateQuestion
-authenticate the question and answer of a question
+### getSurvey
+get a survey
 #### Paramters
-| Name   | Type   | Description                                                    |
-| questionname  | string | army id of the question  |
-| question  | string | question  of the question  |
-| answer  | string | answer of the question  |
+| Name         | Type            | Description                                                    |
+| surveyId     | string          | the id of the survey                                           |
 
-#### Response
+#### example
 ```typescript
-"status": "200 OK"
-true
+{
+    "surveyId": "634e8da60c68790b062e0cfa",
+}
+```
+**-----------------------------------------------------------------------------------------------------------------------------------------**
+### getQuestion
+get a question
+#### Paramters
+| Name         | Type            | Description                                                    |
+| surveyId     | string          | the id of the survey                                           |
+| questionId   | string          | the id of the question                                         |
+
+#### example
+```typescript
+{
+    "surveyId": "634e8da60c68790b062e0cfa",
+    "questionId": "634e8da60c68790b062e0cfb"
+}
+```
+**-----------------------------------------------------------------------------------------------------------------------------------------**
+### deleteSurvey
+delete a survey
+#### Paramters
+| Name         | Type            | Description                                                    |
+| surveyId     | string          | the id of the survey                                           |
+
+#### example
+```typescript
+{
+    "surveyId": "634e8da60c68790b062e0cfa",
+}
+```
+**-----------------------------------------------------------------------------------------------------------------------------------------**
+### deleteQuestion
+delete a question
+#### Paramters
+| Name         | Type            | Description                                                    |
+| surveyId     | string          | the id of the survey                                           |
+| questionId   | string          | the id of the question                                         |
+
+#### example
+```typescript
+{
+    "surveyId": "634e8da60c68790b062e0cfa",
+    "questionId": "634e8da60c68790b062e0cfb"
+}
 ```
 **-----------------------------------------------------------------------------------------------------------------------------------------**

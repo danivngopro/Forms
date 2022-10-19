@@ -4,9 +4,10 @@ import { Question, Survey } from './questions.interface';
 export class QuestionManager {
   static async createSurvey(
     surveyName: string,
+    creatorId: string,
     content: Array<Question>,
   ): Promise<Survey> {
-    return QuestionRepository.createSurvey(surveyName, content);
+    return QuestionRepository.createSurvey(surveyName, creatorId, content);
   }
 
   static async updateSurvey(
