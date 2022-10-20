@@ -38,9 +38,9 @@ docker-compose up --build -d
 | Post   |  createSurvey                                                    | create a survey                                   |
 | Put    |  updateSurvey                                                    | update a survey                                   |
 | Put    |  updateQuestion                                                  | update a question                                 |
-| Get    |  getSurvey                                                       | get a survey by survey id                         |
+| Get    |  getSurveyById                                                       | get a survey by survey id                         |
 | Get    |  getQuestion                                                     | get question by question id                       |
-| delete |  deleteSurvey                                                    | delete survey by survey id                        |
+| delete |  deleteSurveyById                                                    | delete survey by survey id                        |
 | delete |  deleteQuestion                                                  | get question by question id                       |
 
 **---------------------------------------------------------------------------------------------------------------------------------**
@@ -146,7 +146,7 @@ update a question
 }
 ```
 **---------------------------------------------------------------------------------------------------------------------------------**
-### getSurvey
+### getSurveyById
 get a survey
 #### Paramters
 | Name         | Type            | Description                                                    |
@@ -174,7 +174,7 @@ get a question
 }
 ```
 **---------------------------------------------------------------------------------------------------------------------------------**
-### deleteSurvey
+### deleteSurveyById
 delete a survey
 #### Paramters
 | Name         | Type            | Description                                                    |

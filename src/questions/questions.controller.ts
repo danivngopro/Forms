@@ -18,12 +18,12 @@ export class QuestionController {
     );
   }
 
-  static async getSurvey(req: Request, res: Response): Promise<void> {
-    res.json(await QuestionManager.getSurvey(req.params.id));
+  static async getSurveyById(req: Request, res: Response): Promise<void> {
+    res.json(await QuestionManager.getSurveyById(req.params.id));
   }
 
-  static async deleteSurvey(req: Request, res: Response): Promise<void> {
-    res.json(await QuestionManager.deleteSurvey(req.params.id));
+  static async deleteSurveyById(req: Request, res: Response): Promise<void> {
+    res.json(await QuestionManager.deleteSurveyById(req.params.id));
   }
 
   static async getQuestion(req: Request, res: Response): Promise<void> {

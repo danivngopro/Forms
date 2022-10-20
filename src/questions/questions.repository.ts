@@ -33,11 +33,11 @@ export class QuestionRepository {
     ).exec();
   }
 
-  static getSurvey(surveyId: string): Promise<Survey | null> {
+  static getSurveyById(surveyId: string): Promise<Survey | null> {
     return QuestionModel.findById(surveyId).exec();
   }
 
-  static deleteSurvey(surveyId: string): Promise<Survey | null> {
+  static deleteSurveyById(surveyId: string): Promise<Survey | null> {
     return QuestionModel.findByIdAndDelete(surveyId).exec();
   }
 

@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { QuestionRepository } from './questions.repository';
 import { Question, Survey } from './questions.interface';
-import { QuestionNotFoundError, surveyNotFoundError } from '../utils/errors/questions';
+import {
+  QuestionNotFoundError,
+  surveyNotFoundError,
+} from '../utils/errors/questions';
 export class QuestionManager {
   static async createSurvey(
     surveyName: string,
@@ -17,25 +20,26 @@ export class QuestionManager {
     content: Array<Question>,
   ): Promise<Survey | null> {
     let survey;
-    if (!surveyName)
-      survey = QuestionRepository.updateSurveyWithoutName(surveyId, content);
-    survey = QuestionRepository.updateSurvey(surveyId, surveyName, content);
+    if (surveyName === '' || !surveyName)
+      survey = await QuestionRepository.updateSurveyWithoutName(surveyId, content);
+    else
+      survey = await QuestionRepository.updateSurvey(surveyId, surveyName, content);
 
-    if (!survey) throw new surveyNotFoundError;
+    if (!survey) throw new surveyNotFoundError();
     return survey;
   }
 
-  static async getSurvey(surveyId: string): Promise<Survey | null> {
-    const survey = QuestionRepository.getSurvey(surveyId);
+  static async getSurveyById(surveyId: string): Promise<Survey | null> {
+    const survey = await QuestionRepository.getSurveyById(surveyId);
 
-    if (!survey) throw new surveyNotFoundError;
+    if (!survey) throw new surveyNotFoundError();
     return survey;
   }
 
-  static async deleteSurvey(surveyId: string): Promise<Survey | null> {
-    const survey = QuestionRepository.deleteSurvey(surveyId);
+  static async deleteSurveyById(surveyId: string): Promise<Survey | null> {
+    const survey = await QuestionRepository.deleteSurveyById(surveyId);
 
-    if (!survey) throw new surveyNotFoundError;
+    if (!survey) throw new surveyNotFoundError();
     return survey;
   }
 
@@ -43,8 +47,8 @@ export class QuestionManager {
     surveyId: string,
     questionId: string,
   ): Promise<Question | null> {
-    const tempSurvey = await QuestionRepository.getSurvey(surveyId);
-    if (!tempSurvey) throw new surveyNotFoundError;
+    const tempSurvey = await QuestionRepository.getSurveyById(surveyId);
+    if (!tempSurvey) throw new surveyNotFoundError();
 
     const survey = tempSurvey as unknown as Survey;
 
@@ -54,7 +58,7 @@ export class QuestionManager {
       }
     }
 
-    throw new QuestionNotFoundError;
+    throw new QuestionNotFoundError();
   }
 
   static async deleteQuestion(
@@ -66,11 +70,11 @@ export class QuestionManager {
       questionId,
     )) as unknown as Question;
 
-    if (!question) throw new QuestionNotFoundError;
+    if (!question) throw new QuestionNotFoundError();
 
-    const survey = QuestionRepository.deleteQuestion(surveyId, question);
+    const survey = await QuestionRepository.deleteQuestion(surveyId, question);
 
-    if (!survey) throw new surveyNotFoundError;
+    if (!survey) throw new surveyNotFoundError();
     return survey;
   }
 
@@ -81,11 +85,14 @@ export class QuestionManager {
   ): Promise<Survey | null> {
     const survey = await this.deleteQuestion(surveyId, questionId);
 
-    if (!survey) throw new surveyNotFoundError;
-    
-    const updatedSurvey = QuestionRepository.updateSurveyWithoutName(surveyId, content);
-    
-    if (!updatedSurvey) throw new surveyNotFoundError;
+    if (!survey) throw new surveyNotFoundError();
+
+    const updatedSurvey = await QuestionRepository.updateSurveyWithoutName(
+      surveyId,
+      content,
+    );
+
+    if (!updatedSurvey) throw new surveyNotFoundError();
     return updatedSurvey;
   }
 }
