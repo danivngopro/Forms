@@ -7,19 +7,14 @@ export class ValidationError extends QuestionError {
   }
 }
 
-export class IdInvalidError extends QuestionError {
+export class surveyNotFoundError extends QuestionError {
   /* istanbul ignore next */
-  constructor(message = 'Id is invalid') {
-    super(message, 400);
+  constructor(message = 'survey not found') {
+    super(message, 404);
   }
 }
 /* istanbul ignore next */
-export class QuestionnameInvalidError extends QuestionError {
-  constructor(message = 'questionname is invalid') {
-    super(message, 400);
-  }
-}
-export class QuestionNotFound extends QuestionError {
+export class QuestionNotFoundError extends QuestionError {
   constructor() {
     super('question not found', 404);
   }
