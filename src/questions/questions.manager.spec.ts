@@ -9,9 +9,13 @@ import {
   validContent1,
   validContent2,
   invalidSurveyId,
+  invalidQuestionId,
 } from '../utils/mocks';
 import { Question } from './questions.interface';
-import { surveyNotFoundError } from '../utils/errors/questions';
+import {
+  QuestionNotFoundError,
+  surveyNotFoundError,
+} from '../utils/errors/questions';
 
 const {
   db: { connectionString, dbName },
@@ -108,6 +112,243 @@ describe('call Manager Module', () => {
         );
       } catch (err) {
         expect(err).toBeInstanceOf(surveyNotFoundError);
+      }
+    });
+  });
+
+  describe('get a survey by id', () => {
+    test('Should get a survey', async () => {
+      const createdSurvey = await QuestionManager.createSurvey(
+        validSurveyName1,
+        validCreatorId,
+        validContent1 as Question[],
+      );
+
+      if (!createdSurvey.id) {
+        fail();
+      }
+
+      const survey = await QuestionManager.getSurveyById(createdSurvey.id);
+      expect(createdSurvey.id).toEqual(survey?.id);
+    });
+
+    test('Should throw survey not found error', async () => {
+      try {
+        await QuestionManager.getSurveyById(invalidSurveyId);
+      } catch (err) {
+        expect(err).toBeInstanceOf(surveyNotFoundError);
+      }
+    });
+  });
+
+  describe('delete a survey by id', () => {
+    test('Should delete a survey', async () => {
+      const createdSurvey = await QuestionManager.createSurvey(
+        validSurveyName1,
+        validCreatorId,
+        validContent1 as Question[],
+      );
+
+      if (!createdSurvey.id) {
+        fail();
+      }
+
+      const survey = await QuestionManager.deleteSurveyById(createdSurvey.id);
+      expect(createdSurvey.id).toEqual(survey?.id);
+    });
+
+    test('Should throw survey not found error', async () => {
+      try {
+        await QuestionManager.deleteSurveyById(invalidSurveyId);
+      } catch (err) {
+        expect(err).toBeInstanceOf(surveyNotFoundError);
+      }
+    });
+  });
+
+  describe('Get a question', () => {
+    test('Should get a question', async () => {
+      const createdSurvey = await QuestionManager.createSurvey(
+        validSurveyName1,
+        validCreatorId,
+        validContent1 as Question[],
+      );
+
+      if (!createdSurvey.id) {
+        fail();
+      }
+
+      const question = await QuestionManager.getQuestion(
+        createdSurvey.id,
+        createdSurvey.content[0].id as string,
+      );
+      expect(createdSurvey.content[0].id).toEqual(question?.id);
+    });
+
+    test('Should throw survey not found error', async () => {
+      const createdSurvey = await QuestionManager.createSurvey(
+        validSurveyName1,
+        validCreatorId,
+        validContent1 as Question[],
+      );
+
+      if (!createdSurvey.id) {
+        fail();
+      }
+
+      try {
+        await QuestionManager.getQuestion(
+          invalidSurveyId,
+          createdSurvey.content[0].id as string,
+        );
+      } catch (err) {
+        expect(err).toBeInstanceOf(surveyNotFoundError);
+      }
+    });
+
+    test('Should throw question not found error', async () => {
+      const createdSurvey = await QuestionManager.createSurvey(
+        validSurveyName1,
+        validCreatorId,
+        validContent1 as Question[],
+      );
+
+      if (!createdSurvey.id) {
+        fail();
+      }
+
+      try {
+        await QuestionManager.getQuestion(createdSurvey.id, invalidQuestionId);
+      } catch (err) {
+        expect(err).toBeInstanceOf(QuestionNotFoundError);
+      }
+    });
+  });
+
+  describe('delete a question', () => {
+    test('Should delete a question', async () => {
+      const createdSurvey = await QuestionManager.createSurvey(
+        validSurveyName1,
+        validCreatorId,
+        validContent1 as Question[],
+      );
+
+      if (!createdSurvey.id) {
+        fail();
+      }
+
+      const question = await QuestionManager.deleteQuestion(
+        createdSurvey.id,
+        createdSurvey.content[0].id as string,
+      );
+      expect(createdSurvey.content[0].id).not.toEqual(question?.id);
+    });
+
+    test('Should throw survey not found error', async () => {
+      const createdSurvey = await QuestionManager.createSurvey(
+        validSurveyName1,
+        validCreatorId,
+        validContent1 as Question[],
+      );
+
+      if (!createdSurvey.id) {
+        fail();
+      }
+
+      try {
+        await QuestionManager.deleteQuestion(
+          invalidSurveyId,
+          createdSurvey.content[0].id as string,
+        );
+      } catch (err) {
+        expect(err).toBeInstanceOf(surveyNotFoundError);
+      }
+    });
+
+    test('Should throw question not found error', async () => {
+      const createdSurvey = await QuestionManager.createSurvey(
+        validSurveyName1,
+        validCreatorId,
+        validContent1 as Question[],
+      );
+
+      if (!createdSurvey.id) {
+        fail();
+      }
+
+      try {
+        await QuestionManager.deleteQuestion(
+          createdSurvey.id,
+          invalidQuestionId,
+        );
+      } catch (err) {
+        expect(err).toBeInstanceOf(QuestionNotFoundError);
+      }
+    });
+  });
+
+  describe('update a question', () => {
+    test('Should delete a question', async () => {
+      const createdSurvey = await QuestionManager.createSurvey(
+        validSurveyName1,
+        validCreatorId,
+        validContent1 as Question[],
+      );
+
+      if (!createdSurvey.id) {
+        fail();
+      }
+
+      const question = await QuestionManager.updateQuestion(
+        createdSurvey.id,
+        createdSurvey.content[0].id as string,
+        validContent2 as Question[],
+      );
+
+      expect(createdSurvey.content[0].id).not.toEqual(question?.id);
+    });
+
+    test('Should throw survey not found error', async () => {
+      const createdSurvey = await QuestionManager.createSurvey(
+        validSurveyName1,
+        validCreatorId,
+        validContent1 as Question[],
+      );
+
+      if (!createdSurvey.id) {
+        fail();
+      }
+
+      try {
+        await QuestionManager.updateQuestion(
+          invalidSurveyId,
+          createdSurvey.content[0].id as string,
+          validContent2 as Question[],
+        );
+      } catch (err) {
+        expect(err).toBeInstanceOf(surveyNotFoundError);
+      }
+    });
+
+    test('Should throw question not found error', async () => {
+      const createdSurvey = await QuestionManager.createSurvey(
+        validSurveyName1,
+        validCreatorId,
+        validContent1 as Question[],
+      );
+
+      if (!createdSurvey.id) {
+        fail();
+      }
+
+      try {
+        await QuestionManager.updateQuestion(
+          createdSurvey.id,
+          invalidQuestionId,
+          validContent2 as Question[],
+        );
+      } catch (err) {
+        expect(err).toBeInstanceOf(QuestionNotFoundError);
       }
     });
   });
