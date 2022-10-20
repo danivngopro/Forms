@@ -27,11 +27,11 @@ const sectionSchema: mongoose.Schema = new mongoose.Schema({
 
 const answerSchema: mongoose.Schema = new mongoose.Schema({
   surveyId: {
-    type: String,
+    type: mongoose.SchemaTypes.String,
     required: true,
   },
   userId: {
-    type: String,
+    type: mongoose.SchemaTypes.String,
     required: true,
   },
   content: {
