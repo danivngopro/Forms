@@ -3,7 +3,7 @@ import { AnswerRepository } from './answers.repository';
 import { iSurvey } from './answers.interface';
 import { SurveyNotFound } from '../utils/errors/answer';
 
-export class UserManager {
+export class AnswerManager {
   static async create(newSurvey: iSurvey): Promise<iSurvey> {
     return AnswerRepository.create(newSurvey);
   }

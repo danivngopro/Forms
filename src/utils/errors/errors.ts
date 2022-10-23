@@ -13,7 +13,7 @@ export class ApplicationError extends Error implements jayson.JSONRPCError {
   }
 }
 
-export class UserError extends ApplicationError {
+export class AnswerError extends ApplicationError {
   constructor(message = 'Answer Error', status = 400) {
     super(message, status);
   }

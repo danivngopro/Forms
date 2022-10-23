@@ -1,6 +1,6 @@
-import { UserError } from './errors';
+import { AnswerError } from './errors';
 
-export class SurveyNotFound extends UserError {
+export class SurveyNotFound extends AnswerError {
   constructor() {
     super('Survey not found', 404);
   }
