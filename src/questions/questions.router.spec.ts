@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import { Server } from '../server';
 import { config } from '../config';
 import {
+  invalidSurveyId,
   validContent1,
   validCreatorId,
   validSurveyName1,
@@ -79,7 +80,8 @@ describe('Questions Router Module', () => {
         .send({
           surveyId: survey.id,
           surveyName: validSurveyName2,
-          content: validContent1 as Question[] });
+          content: validContent1 as Question[],
+        });
       expect(response.status).toEqual(200);
       expect(response.headers['content-type']).toMatch(/json/);
       expect(response.body).toBeDefined();
@@ -93,6 +95,184 @@ describe('Questions Router Module', () => {
           creatorId: validCreatorId,
           content: '',
         });
+      } catch (err) {
+        expect(err).toBeInstanceOf(ValidationError);
+      }
+    });
+  });
+
+  describe('#Get /api/questions/getSurveyById', () => {
+    test('Should return the survey', async () => {
+      const survey = await QuestionManager.createSurvey(
+        validSurveyName1,
+        validCreatorId,
+        validContent1 as Question[],
+      );
+
+      const response = await request(server.app).get(
+        `${basePath}/getSurveyById?id=${survey.id}`,
+      );
+      console.log(response.body);
+
+      expect(response.status).toEqual(200);
+      expect(response.headers['content-type']).toMatch(/json/);
+      expect(response.body).toBeDefined();
+      expect(response.body.id).toEqual(survey.id);
+    });
+
+    test('Should throw ValidationError', async () => {
+      try {
+        await request(server.app).post(
+          `${basePath}/getSurveyById?id=${invalidSurveyId}`,
+        );
+      } catch (err) {
+        expect(err).toBeInstanceOf(ValidationError);
+      }
+    });
+  });
+
+  describe('#Delete /api/questions/deleteSurveyById', () => {
+    test('Should return the survey', async () => {
+      const survey = await QuestionManager.createSurvey(
+        validSurveyName1,
+        validCreatorId,
+        validContent1 as Question[],
+      );
+
+      const response = await request(server.app).delete(
+        `${basePath}/deleteSurveyById?id=${survey.id}`,
+      );
+      console.log(response.body);
+
+      expect(response.status).toEqual(200);
+      expect(response.headers['content-type']).toMatch(/json/);
+      expect(response.body).toBeDefined();
+      expect(response.body.id).toEqual(survey.id);
+    });
+
+    test('Should throw ValidationError', async () => {
+      try {
+        await request(server.app).delete(
+          `${basePath}/deleteSurveyById?id=${invalidSurveyId}`,
+        );
+      } catch (err) {
+        expect(err).toBeInstanceOf(ValidationError);
+      }
+    });
+  });
+
+  describe('#Put /api/questions/updateQuestion', () => {
+    test('Should return the updated question', async () => {
+      const survey = await QuestionManager.createSurvey(
+        validSurveyName1,
+        validCreatorId,
+        validContent1 as Question[],
+      );
+
+      const response = await request(server.app)
+        .put(
+          `${basePath}/updateQuestion?surveyId=${survey.id}&questionId=${survey.content[0].id}`,
+        )
+        .send({
+          surveyId: survey.id,
+          surveyName: validSurveyName2,
+          content: validContent1 as Question[],
+        });
+      expect(response.status).toEqual(200);
+      expect(response.headers['content-type']).toMatch(/json/);
+      expect(response.body).toBeDefined();
+      expect(response.body.id).toBeDefined();
+    });
+
+    test('Should throw ValidationError', async () => {
+      const survey = await QuestionManager.createSurvey(
+        validSurveyName1,
+        validCreatorId,
+        validContent1 as Question[],
+      );
+
+      try {
+        await request(server.app)
+          .put(
+            `${basePath}/updateQuestion?surveyId=${survey.id}&questionId=${invalidSurveyId}`,
+          )
+          .send({
+            surveyId: survey.id,
+            surveyName: validSurveyName2,
+            content: validContent1 as Question[],
+          });
+      } catch (err) {
+        expect(err).toBeInstanceOf(ValidationError);
+      }
+    });
+  });
+
+  describe('#Get /api/questions/getQuestion', () => {
+    test('Should return the question', async () => {
+      const survey = await QuestionManager.createSurvey(
+        validSurveyName1,
+        validCreatorId,
+        validContent1 as Question[],
+      );
+
+      const response = await request(server.app).get(
+        `${basePath}/getQuestion?surveyId=${survey.id}&questionId=${survey.content[0].id}`,
+      );
+
+      expect(response.status).toEqual(200);
+      expect(response.headers['content-type']).toMatch(/json/);
+      expect(response.body).toBeDefined();
+      expect(response.body.id).toBeDefined();
+    });
+
+    test('Should throw ValidationError', async () => {
+      const survey = await QuestionManager.createSurvey(
+        validSurveyName1,
+        validCreatorId,
+        validContent1 as Question[],
+      );
+
+      try {
+        await request(server.app)
+          .get(
+            `${basePath}/getQuestion?surveyId=${survey.id}&questionId=${invalidSurveyId}`,
+          );
+      } catch (err) {
+        expect(err).toBeInstanceOf(ValidationError);
+      }
+    });
+  });
+
+  describe('#Delete /api/questions/deleteQuestion', () => {
+    test('Should return the question', async () => {
+      const survey = await QuestionManager.createSurvey(
+        validSurveyName1,
+        validCreatorId,
+        validContent1 as Question[],
+      );
+
+      const response = await request(server.app).delete(
+        `${basePath}/deleteQuestion?surveyId=${survey.id}&questionId=${survey.content[0].id}`,
+      );
+
+      expect(response.status).toEqual(200);
+      expect(response.headers['content-type']).toMatch(/json/);
+      expect(response.body).toBeDefined();
+      expect(response.body.id).toBeDefined();
+    });
+
+    test('Should throw ValidationError', async () => {
+      const survey = await QuestionManager.createSurvey(
+        validSurveyName1,
+        validCreatorId,
+        validContent1 as Question[],
+      );
+
+      try {
+        await request(server.app)
+          .delete(
+            `${basePath}/deleteQuestion?surveyId=${survey.id}&questionId=${invalidSurveyId}`,
+          );
       } catch (err) {
         expect(err).toBeInstanceOf(ValidationError);
       }

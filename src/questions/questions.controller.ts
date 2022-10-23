@@ -19,11 +19,11 @@ export class QuestionController {
   }
 
   static async getSurveyById(req: Request, res: Response): Promise<void> {
-    res.json(await QuestionManager.getSurveyById(req.params.id));
+    res.json(await QuestionManager.getSurveyById(req.query.id as string));
   }
 
   static async deleteSurveyById(req: Request, res: Response): Promise<void> {
-    res.json(await QuestionManager.deleteSurveyById(req.params.id));
+    res.json(await QuestionManager.deleteSurveyById(req.query.id as string));
   }
 
   static async getQuestion(req: Request, res: Response): Promise<void> {

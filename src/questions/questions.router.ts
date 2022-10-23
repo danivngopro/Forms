@@ -10,8 +10,8 @@ const QuestionRouter: Router = Router();
 
 QuestionRouter.post('/createSurvey', ValidateRequest(createSurveyReqSchema), wrapAsync(QuestionController.createSurvey));
 QuestionRouter.put('/updateSurvey', ValidateRequest(addQuestionReqSchema), wrapAsync(QuestionController.updateSurvey));
-QuestionRouter.get('/getSurveyById/id/:id', ValidateRequest(getSurveyByIdReqSchema), wrapAsync(QuestionController.getSurveyById));
-QuestionRouter.delete('/deleteSurveyById/id/:id', ValidateRequest(getSurveyByIdReqSchema), wrapAsync(QuestionController.deleteSurveyById));
+QuestionRouter.get('/getSurveyById', ValidateRequest(getSurveyByIdReqSchema), wrapAsync(QuestionController.getSurveyById));
+QuestionRouter.delete('/deleteSurveyById', ValidateRequest(getSurveyByIdReqSchema), wrapAsync(QuestionController.deleteSurveyById));
 
 QuestionRouter.get('/getQuestion', ValidateRequest(getQuestionReqSchema), wrapAsync(QuestionController.getQuestion));
 QuestionRouter.delete('/deleteQuestion', ValidateRequest(getQuestionReqSchema), wrapAsync(QuestionController.deleteQuestion));
