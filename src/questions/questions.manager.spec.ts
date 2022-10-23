@@ -14,16 +14,17 @@ import {
 import { Question } from './questions.interface';
 import {
   QuestionNotFoundError,
-  surveyNotFoundError,
+  SurveyNotFoundError,
 } from '../utils/errors/questions';
 
 const {
   db: { connectionString, dbName },
 } = config;
 
-describe('call Manager Module', () => {
+describe('Questions Manager Module', () => {
   beforeAll(async () => {
     await mongoose.connect(connectionString, { dbName });
+    await mongoose.connection.dropDatabase();
   });
 
   afterEach(async () => {
@@ -111,7 +112,7 @@ describe('call Manager Module', () => {
           validContent2 as Question[],
         );
       } catch (err) {
-        expect(err).toBeInstanceOf(surveyNotFoundError);
+        expect(err).toBeInstanceOf(SurveyNotFoundError);
       }
     });
   });
@@ -136,7 +137,7 @@ describe('call Manager Module', () => {
       try {
         await QuestionManager.getSurveyById(invalidSurveyId);
       } catch (err) {
-        expect(err).toBeInstanceOf(surveyNotFoundError);
+        expect(err).toBeInstanceOf(SurveyNotFoundError);
       }
     });
   });
@@ -161,7 +162,7 @@ describe('call Manager Module', () => {
       try {
         await QuestionManager.deleteSurveyById(invalidSurveyId);
       } catch (err) {
-        expect(err).toBeInstanceOf(surveyNotFoundError);
+        expect(err).toBeInstanceOf(SurveyNotFoundError);
       }
     });
   });
@@ -202,7 +203,7 @@ describe('call Manager Module', () => {
           createdSurvey.content[0].id as string,
         );
       } catch (err) {
-        expect(err).toBeInstanceOf(surveyNotFoundError);
+        expect(err).toBeInstanceOf(SurveyNotFoundError);
       }
     });
 
@@ -261,7 +262,7 @@ describe('call Manager Module', () => {
           createdSurvey.content[0].id as string,
         );
       } catch (err) {
-        expect(err).toBeInstanceOf(surveyNotFoundError);
+        expect(err).toBeInstanceOf(SurveyNotFoundError);
       }
     });
 
@@ -326,7 +327,7 @@ describe('call Manager Module', () => {
           validContent2 as Question[],
         );
       } catch (err) {
-        expect(err).toBeInstanceOf(surveyNotFoundError);
+        expect(err).toBeInstanceOf(SurveyNotFoundError);
       }
     });
 

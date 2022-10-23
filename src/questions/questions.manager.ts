@@ -3,7 +3,7 @@ import { QuestionRepository } from './questions.repository';
 import { Question, Survey } from './questions.interface';
 import {
   QuestionNotFoundError,
-  surveyNotFoundError,
+  SurveyNotFoundError,
 } from '../utils/errors/questions';
 export class QuestionManager {
   static async createSurvey(
@@ -25,21 +25,21 @@ export class QuestionManager {
     else
       survey = await QuestionRepository.updateSurvey(surveyId, surveyName, content);
 
-    if (!survey) throw new surveyNotFoundError();
+    if (!survey) throw new SurveyNotFoundError();
     return survey;
   }
 
   static async getSurveyById(surveyId: string): Promise<Survey | null> {
     const survey = await QuestionRepository.getSurveyById(surveyId);
 
-    if (!survey) throw new surveyNotFoundError();
+    if (!survey) throw new SurveyNotFoundError();
     return survey;
   }
 
   static async deleteSurveyById(surveyId: string): Promise<Survey | null> {
     const survey = await QuestionRepository.deleteSurveyById(surveyId);
 
-    if (!survey) throw new surveyNotFoundError();
+    if (!survey) throw new SurveyNotFoundError();
     return survey;
   }
 
@@ -48,7 +48,7 @@ export class QuestionManager {
     questionId: string,
   ): Promise<Question | null> {
     const tempSurvey = await QuestionRepository.getSurveyById(surveyId);
-    if (!tempSurvey) throw new surveyNotFoundError();
+    if (!tempSurvey) throw new SurveyNotFoundError();
 
     const survey = tempSurvey as unknown as Survey;
 
@@ -74,7 +74,7 @@ export class QuestionManager {
 
     const survey = await QuestionRepository.deleteQuestion(surveyId, question);
 
-    if (!survey) throw new surveyNotFoundError();
+    if (!survey) throw new SurveyNotFoundError();
     return survey;
   }
 
@@ -85,14 +85,14 @@ export class QuestionManager {
   ): Promise<Survey | null> {
     const survey = await this.deleteQuestion(surveyId, questionId);
 
-    if (!survey) throw new surveyNotFoundError();
+    if (!survey) throw new SurveyNotFoundError();
 
     const updatedSurvey = await QuestionRepository.updateSurveyWithoutName(
       surveyId,
       content,
     );
 
-    if (!updatedSurvey) throw new surveyNotFoundError();
+    if (!updatedSurvey) throw new SurveyNotFoundError();
     return updatedSurvey;
   }
 }

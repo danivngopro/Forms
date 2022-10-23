@@ -7,7 +7,7 @@ export class ValidationError extends QuestionError {
   }
 }
 
-export class surveyNotFoundError extends QuestionError {
+export class SurveyNotFoundError extends QuestionError {
   /* istanbul ignore next */
   constructor(message = 'survey not found') {
     super(message, 404);

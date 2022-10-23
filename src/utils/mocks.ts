@@ -1,22 +1,3 @@
-export const validSurvey = {
-  surveyName: 'uri ma shlomha',
-  creatorId: 'asdfasdfasdfasdfasdfasdf',
-  content: [
-    {
-      questionName: 'is uri a dolphin?',
-      questionType: 'select',
-      answers: [
-        {
-          answer: 'yes',
-        },
-        {
-          answer: 'only half',
-        },
-      ],
-    },
-  ],
-};
-
 export const validSurveyName1 = 'survey123';
 export const validSurveyName2 = 'changedSurveyName';
 export const validCreatorId = 'asdfasdfasdfasdfasdfasd1';
