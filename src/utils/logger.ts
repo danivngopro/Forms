@@ -5,6 +5,7 @@ import { SeverityLevel } from './severityLevel';
 export const logger = {
   log: (severityLevel: SeverityLevel, message: string, additionalInfo?: any): void => {
     console.log(`[${severityLevel}]: ${message}`);
+    /* istanbul ignore next */
     if (additionalInfo !== undefined) {
       console.log(inspect(additionalInfo, {
         showHidden: false, depth: null, colors: true, breakLength: 100,

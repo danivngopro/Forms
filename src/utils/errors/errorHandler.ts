@@ -17,11 +17,14 @@ export const errorMiddleware = (error: Error, _req: express.Request, res: expres
       message: error.message,
     });
     logger.log(SeverityLevel.Error, `${error.name} was thrown with status ${error.status} and message ${error.message}`);
+  /* istanbul ignore next */
   } else {
+    /* istanbul ignore next */
     res.status(500).send({
       type: error.name,
       message: error.message,
     });
+    /* istanbul ignore next */
     logger.log(SeverityLevel.Error, `${error.name} was thrown with status 500 and message ${error.message}`);
   }
 

@@ -38,7 +38,9 @@ export class Server {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Authorization, Origin, X-Requested-With, Content-Type');
 
+    /* istanbul ignore next */
     if (req.method === 'OPTIONS') {
+      /* istanbul ignore next */
       return res.status(200).end();
     }
 

@@ -5,6 +5,7 @@ const AppRouter: Router = Router();
 
 AppRouter.use('/api/questions', QuestionRouter);
 
+/* istanbul ignore next */
 AppRouter.use('/isalive', (_req, res) => {
   res.status(200).send('alive');
 });

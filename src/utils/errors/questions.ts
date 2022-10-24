@@ -1,8 +1,8 @@
 import { QuestionError } from './errors';
 
 export class ValidationError extends QuestionError {
+  /* istanbul ignore next */
   constructor() {
-    /* istanbul ignore next */
     super('Validation error', 400);
   }
 }
