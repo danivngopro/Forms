@@ -1,127 +1,72 @@
-# USERS Crud
+# answers Crud
 ## Table of Contents
 - [Full Setup](#full-setup)
     - [Installation](#installation)
     - [Run](#run)
 - [Usage](#usage)
     - [HTTP paths](#http-paths)
-    - [get a user](#army-id)
-    - [get a user's auth](#validate-question)
-    - [Post a new user](#/)
-    - [update a user](#army-id)
+    - [creat a answer](#answer-id#survey-id)
+    - [get answer's information of question](#answer-id#survey-id)
 
 ## Full Setup
 ### Installation
 
 ```bash
-git clone https://gitlab.com/yesodot/selenium/apollo/sociometry/sociometry-ui.git
-
-cd user-crud
-
+git clone https://github.com/danivngopro/Forms.git
+cd forms/questions
 npm install
 ```
 
 ### Run 
 
 ```bash
-npm start
+docker-compose up --build -d
 ```
 
 ## Usage
 #### HTTP paths 
 
 | METHOD | ENDPOINT                                                         | DESCRIPTION                                       |
-| ------ | :----------------------------------------------------------------| :----------------------------------------------    |
-| Post   |  create                                                          | create a user                                          |
-| Put    |  updateByusername                                                  | update a user                                      |
-| Get    |  getByusername                                                     | get by army id                                     |
-| Get    |  validateQuestion                                                | get auth by army id                                     |
+| ------ | :----------------------------------------------------------------| :----------------------------------------------   |
+| Post   |                                                                  | create the survey answer                          |
+| Get    |  find                                                            | get the survey answer's information               |
 
-**-------------------------------------------------------------------------------------------------------------------------------------**
+**---------------------------------------------------------------------------------------------------------------------------------**
 
-### create
-post a user
+### createSurveyQuestionAnswer
+post a survey question's answers
 #### Paramters
-| Name   | Type   | Description                                                    |
-| username  | string | army id of the user  |
-| firstName  | string | first name of the user  |
-| lastName  | string | lastname of the user  |
-| permissions  | permissionType | basic, mada or segel  |
-| validationQuestion  | {string, string} | the question and the anwer of the user  |
+| Name         | Type            | Description                                                    |
+| surveyId     | string          | the id of the survey                                           |
+| userId       | string          | id of the user that created the survey                         |
+| content      | Array<iSection> | array of the question id and theirs answers id                 |
+| questionId   | string          | the id of the question                                         |
+| answers      | Array<String>   | array of the answers id the user selected                      |
 
-#### Response
+
+#### example
 ```typescript
-"status": "200 OK"
 {
-    "username": "8599492",
-    "firstName": "string",
-    "lastName": "string",
-    "permissions": ["QUESTION1"],
-    "validationQuestion": {
-        "question": "MADA",
-        "answer": "string"
-  }
+    "surveyId": "123412341234123412341234",
+    "userId": "123456123456123456123456",
+    "content":  [
+        {
+            "questionId": "111111111111111111111111",
+            "answers": ["123456781234567812345678"]
+        }
+    ]
 }
 ```
-**-----------------------------------------------------------------------------------------------------------------------------------------**
-### getByusername
-get a user
+**---------------------------------------------------------------------------------------------------------------------------------**
+### getSurveyQuestionsAnswersInformation
+get the survey question's answers
 #### Paramters
-| Name   | Type   | Description                                                    |
-| username  | string | the username of the user in the params |
+| Name         | Type            | Description                                                    |
+| surveyId     | string          | the id of the survey                                           |
 
-#### Response
+#### example
 ```typescript
-"status": "200 OK"
-{
-    "username": "8599492",
-    "firstName": "string",
-    "lastName": "string",
-    "permissions": ["QUESTION1"],
-    "validationQuestion": {
-        "question": "MADA",
-        "answer": "string"
-  }
-}
+/find?surveyId=634e8da60c68790b062e0cfa
 ```
-**-----------------------------------------------------------------------------------------------------------------------------------------**
-
-### updateByusername
-update a user
-#### Paramters
-| Name   | Type   | Description                                                    |
-| username  | string | army id of the user  |
-| firstName  | string | first name of the user  |
-| lastName  | string | lastname of the user  |
-| permissions  | permissionType | basic, mada or segel  |
-| validationQuestion  | {string, string} | the question and the anwer of the user  |
-
-#### Response
-```typescript
-"status": "200 OK"
-{
-    "username": "8599492",
-    "firstName": "string",
-    "lastName": "string",
-    "permissions": ["QUESTION1"],
-    "validationQuestion": {
-        "question": "MADA",
-        "answer": "string"
-  }
-}
-```
-**-----------------------------------------------------------------------------------------------------------------------------------------**
-### validateQuestion
-authenticate the question and answer of a user
-#### Paramters
-| Name   | Type   | Description                                                    |
-| username  | string | army id of the user  |
-| question  | string | question  of the user  |
-| answer  | string | answer of the user  |
-
-#### Response
-```typescript
-"status": "200 OK"
-true
-```
-**-----------------------------------------------------------------------------------------------------------------------------------------**
+**---------------------------------------------------------------------------------------------------------------------------------**
+Footer
