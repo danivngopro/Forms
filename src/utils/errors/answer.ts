@@ -5,3 +5,9 @@ export class SurveyNotFound extends AnswerError {
     super('Survey not found', 404);
   }
 }
+
+export class ValidationError extends AnswerError {
+  constructor() {
+    super('Validation error', 400);
+  }
+}

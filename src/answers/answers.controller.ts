@@ -9,7 +9,7 @@ export class AnswerController {
   } 
 
   static async showSurveyById(req: Request, res: Response): Promise<void> {
-    const { surveyId } = req.body;
+    const { surveyId } = req.query as any;
     res.json(await AnswerManager.showSurveyById(surveyId));
   }
 }

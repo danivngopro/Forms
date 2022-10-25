@@ -22,8 +22,8 @@ export const postSurveySchema = Joi.object({
 });
 
 export const getSurveySchema = Joi.object({
-  body: surveyIdSchema,
-  query: {},
+  body: {},
+  query: surveyIdSchema,
   params: {},
 });
 
