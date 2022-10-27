@@ -1,9 +1,14 @@
-import React from 'react';
-import './App.css';
+import "./App.css";
+import { Route, Routes } from "react-router-dom";
+import SurveyCreationPage from "./pages/SurveyAnswerPage/SurveyCreationPage"; // change
 
 function App() {
   return (
-    <h1>hello</h1>
+    <div className="survey-creation-name-container">
+      <Routes>
+        <Route path="/answerSurvey" element={<SurveyAnswerPage />} />
+      </Routes>
+    </div>
   );
 }
 
