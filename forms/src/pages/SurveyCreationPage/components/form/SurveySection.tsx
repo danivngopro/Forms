@@ -1,9 +1,9 @@
-import "./SurveyTitle.scss";
+import "./SurveySection.scss";
 
-function SurveyTitle(section: string) {
+function SurveySection(props: { text: string }) {
   return (
-    <h1>{section}</h1>
+    <h1>survey Section {props.text}</h1>
   );
 }
 
-export default SurveyTitle;
+export default SurveySection;

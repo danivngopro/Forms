@@ -4,8 +4,7 @@ import SurveyTitle from "./components/form/SurveyTitle";
 import "./SurveyCreationPage.scss";
 
 function SurveyCreationPage() {
-
-  const [sections, setSections] = useState(['a', 'b', 'c']);
+  const [sections, setSections] = useState(["a", "b", "c"]);
 
   return (
     <div className="survey-creation-page-container">
@@ -14,7 +13,11 @@ function SurveyCreationPage() {
         <SurveyTitle />
       </div>
       <div className="survey-creation-page-sections">
-        {/* {sections.map((section, i) => <SurveySection section/>)} */}
+        {sections.map((section, i) => (
+          <div key={i}>
+            <SurveySection text={section} />
+          </div>
+        ))}
       </div>
     </div>
   );
