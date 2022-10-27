@@ -8,6 +8,8 @@ import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import Tooltip from '@mui/material/Tooltip';
 import Avatar from '@mui/material/Avatar';
+import { SetStateAction, useState } from 'react';
+import { SearchNav } from './search';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -51,7 +53,22 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function Navbar() {
+export default function Navbar(props: { addCards: Object }) {
+
+  const [searchField, setSearchField] = useState("");
+  const { addCards } = props;
+
+  const handleChange = (e: { target: { value: SetStateAction<string>; }; }) => {
+    setSearchField(e.target.value);
+  };
+
+  // const handleKeyPress = (e: any) => {
+  //   if (e.key === 'Enter') {
+  //     <SearchNav searchField={searchField} addCards={addCards} />
+  //     console.log("ggg")
+  //   }
+  // }
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -62,9 +79,9 @@ export default function Navbar() {
             color="inherit"
             aria-label="open drawer"
             sx={{ mr: 2 }}>
-            <Tooltip title="Open settings">
+            <Tooltip title="The name of the profiles">
               <IconButton sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Z" src="/assets/img.jpg" />
               </IconButton>
             </Tooltip>
 
@@ -83,6 +100,8 @@ export default function Navbar() {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
+              onChange={handleChange}
+              onKeyPress={ (e)=>e.key === "Enter" ? <SearchNav searchField={searchField} addCards={addCards} /> : null}
             />
           </Search>
         </Toolbar>

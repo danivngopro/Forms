@@ -1,15 +1,17 @@
 import './App.css';
-import Navbar from './components/form/navbar';
-import { Cards } from './card';
+import HomePage from './pages/homePage';
 
 export function App() {
-
   return (
-    <>
-      <Navbar />
-      <Cards/>
-    </>
+    <HomePage />
   )
 }
 
 export default App;
+
+
+
+
+
+
+
