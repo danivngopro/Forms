@@ -1,6 +1,7 @@
 import { useState } from "react";
-import SurveySection from "./components/form/SurveySection";
-import SurveyTitle from "./components/form/SurveyTitle";
+import DropDown from "../../components/form/DropDown";
+import SurveySection from "./components/form/SurveySection/SurveySection";
+import SurveyTitle from "./components/form/SurveyTitle/SurveyTitle";
 import "./SurveyCreationPage.scss";
 
 function SurveyCreationPage() {
@@ -19,6 +20,7 @@ function SurveyCreationPage() {
           </div>
         ))}
       </div>
+      <DropDown />
     </div>
   );
 }
