@@ -4,12 +4,14 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import Tooltip from '@mui/material/Tooltip';
 import Avatar from '@mui/material/Avatar';
-import { SetStateAction, useState } from 'react';
+import { Route, BrowserRouter as Router, Routes, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { SearchNav } from './search';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -36,38 +38,15 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   justifyContent: 'center',
 }));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '12ch',
-      '&:focus': {
-        width: '20ch',
-      },
-    },
-  },
-}));
-
-export default function Navbar(props: { addCards: Object }) {
+export default function Navbar(props: { addCards: any[] }) {
 
   const [searchField, setSearchField] = useState("");
   const { addCards } = props;
+  const navigate = useNavigate();
 
-  const handleChange = (e: { target: { value: SetStateAction<string>; }; }) => {
-    setSearchField(e.target.value);
+  const handleChange = () => {
+    navigate("/SearchNav")
   };
-
-  // const handleKeyPress = (e: any) => {
-  //   if (e.key === 'Enter') {
-  //     <SearchNav searchField={searchField} addCards={addCards} />
-  //     console.log("ggg")
-  //   }
-  // }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -97,15 +76,22 @@ export default function Navbar(props: { addCards: Object }) {
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-              onChange={handleChange}
-              onKeyPress={ (e)=>e.key === "Enter" ? <SearchNav searchField={searchField} addCards={addCards} /> : null}
-            />
+            <Autocomplete
+              onInputChange={(event, newInputValue) => {
+                setSearchField(newInputValue);
+                handleChange();
+              }}
+              disablePortal
+              id="combo-box-demo"
+              options={addCards.map((option) => option.title)}
+              sx={{ width: 300 }}
+              renderInput={(params) => <TextField {...params} />} />
           </Search>
         </Toolbar>
       </AppBar>
+      <Routes>
+        <Route path='/SearchNav' element={<SearchNav searchField={searchField} addCards={addCards} />}></Route>
+      </Routes>
     </Box>
   );
 }

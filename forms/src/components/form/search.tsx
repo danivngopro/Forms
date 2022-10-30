@@ -4,8 +4,7 @@ import { Cards } from './cards';
 
 export const SearchNav = (props: { searchField: String, addCards: any }): JSX.Element => {
 
-    console.log("hhh")
-
+    // console.log(JSON.stringify(props.searchField),JSON.stringify(props.addCards))
     const [filterCards, setFilterCards] = useState<{ title: String }[]>([])
     
     useEffect(() => {

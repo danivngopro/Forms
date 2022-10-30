@@ -8,7 +8,6 @@ import StateTextFields from '../components/form/addCard';
 import Navbar from '../components/form/navbar';
 import { useState } from "react";
 import { OneCard } from '../components/form/oneCard';
-import { SearchNav } from '../components/form/search';
 
 export function HomePage() {
 
@@ -34,16 +33,13 @@ export function HomePage() {
       <Link sx={{ color: "#2771b0", fontWeight: "bold", margin: "700px" }} href="/cards" underline="none">
         {'הסקרים שלי'}
       </Link>
-
       <StyledFab className="addIcon" color="primary" aria-label="add">
         <AddIcon type="button" onClick={navigateApi} />
       </StyledFab>
-
       <Routes>
         <Route path="/cards" element={<Cards addCards={addCards} />} />
         <Route path="/newSurvey" element={<StateTextFields />} />
         <Route path='/oneCard' element={<OneCard />}></Route>
-        {/* <Route path='/SearchNav' element={<SearchNav/>}></Route> */}
       </Routes>
 
     </>
