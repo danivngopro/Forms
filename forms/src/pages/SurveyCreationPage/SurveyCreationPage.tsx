@@ -1,17 +1,16 @@
 import { useState } from "react";
-import DropDown from "../../components/form/DropDown";
 import SurveySection from "./components/form/SurveySection/SurveySection";
 import SurveyTitle from "./components/form/SurveyTitle/SurveyTitle";
 import "./SurveyCreationPage.scss";
 
-function SurveyCreationPage() {
-  const [sections, setSections] = useState(["a", "b", "c"]);
+function SurveyCreationPage(props: { surveyName: string }) {
+  const [sections, setSections] = useState(["a", "b", "c", "d"]);
 
   return (
     <div className="survey-creation-page-container">
       <h1>hello creation page</h1>
       <div className="survey-creation-page-title-container">
-        <SurveyTitle />
+        <SurveyTitle surveyName={ props.surveyName } />
       </div>
       <div className="survey-creation-page-sections">
         {sections.map((section, i) => (
@@ -20,7 +19,6 @@ function SurveyCreationPage() {
           </div>
         ))}
       </div>
-      <DropDown />
     </div>
   );
 }

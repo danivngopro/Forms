@@ -6,7 +6,7 @@ function App() {
   return (
     <div className="survey-creation-name-container">
       <Routes>
-        <Route path="/createSurvey" element={<SurveyCreationPage />} />
+        <Route path="/createSurvey" element={<SurveyCreationPage surveyName='test'/>} />
       </Routes>
     </div>
   );
