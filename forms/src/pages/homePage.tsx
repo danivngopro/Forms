@@ -7,7 +7,6 @@ import { styled } from '@mui/material/styles';
 import StateTextFields from '../components/form/addCard';
 import Navbar from '../components/form/navbar';
 import { useState } from "react";
-import { OneCard } from '../components/form/oneCard';
 
 export function HomePage() {
 
@@ -23,23 +22,27 @@ export function HomePage() {
     margin: '0 auto',
   });
 
-  const navigateApi = () => {
+  const navigateApiNewSurvey = () => {
     navigate('/newSurvey');
   };
+
+  const navigateApiCards = () => {
+    navigate('/cards');
+  }
 
   return (
     <>
       <Navbar addCards={addCards} />
-      <Link sx={{ color: "#2771b0", fontWeight: "bold", margin: "700px" }} href="/cards" underline="none">
+      <Link sx={{ color: "#2771b0", fontWeight: "bold", margin: "700px" }} onClick={navigateApiCards} underline="none">
         {'הסקרים שלי'}
       </Link>
       <StyledFab className="addIcon" color="primary" aria-label="add">
-        <AddIcon type="button" onClick={navigateApi} />
+        <AddIcon type="button" onClick={navigateApiNewSurvey} />
       </StyledFab>
+      
       <Routes>
-        <Route path="/cards" element={<Cards addCards={addCards} />} />
+        <Route path="/cards" element={<Cards filterCard={[]} addCards={addCards} flag={false}  />} />
         <Route path="/newSurvey" element={<StateTextFields />} />
-        <Route path='/oneCard' element={<OneCard />}></Route>
       </Routes>
 
     </>

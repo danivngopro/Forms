@@ -11,20 +11,29 @@ import DropDown from '../ui/DropDown';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
-export const Cards = (props: { addCards: any[] }): JSX.Element => {
+export const Cards = (props: { filterCard: any[], addCards: any[], flag: any }): JSX.Element => {
 
-  const { addCards } = props;
+  let { addCards } = props;
+  let { filterCard } = props;
+  let { flag } = props;
+
+  if (flag){
+    console.log(flag)
+    addCards = filterCard ;
+  }    
   const [enterTime, setEnterTime] = useState("");
 
   const handleChange = () => {
     setEnterTime(new Date().toLocaleString())
   };
 
+  flag=false;
+
   return (<>
     <div>
-      <Grid sx={{ marginLeft: "10px", marginTop: "13px" }} container spacing={0}>
-        {addCards.map((singleCard, index) =>
-          // <Link to='/oneCard'>
+      {
+        <Grid sx={{ marginLeft: "10px", marginTop: "13px" }} container spacing={0}>
+          {addCards.map((singleCard, index) =>
             <Card sx={{ maxWidth: 345, marginLeft: "10px" }} onClick={handleChange}>
               <CardHeader
                 avatar={
@@ -34,7 +43,7 @@ export const Cards = (props: { addCards: any[] }): JSX.Element => {
                 }
                 action={
                   <IconButton aria-label="settings">
-                    <DropDown />
+                    <DropDown singleCard={singleCard} />
                   </IconButton>
                 }
                 title={singleCard.title}
@@ -50,9 +59,9 @@ export const Cards = (props: { addCards: any[] }): JSX.Element => {
                 </Typography>
               </CardContent>
             </Card>
-          // </Link>
-        )}
-      </Grid>
+          )}
+        </Grid>
+      }
     </div>
   </>
   );

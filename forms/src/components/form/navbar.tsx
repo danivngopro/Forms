@@ -5,7 +5,6 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import SearchIcon from '@mui/icons-material/Search';
-import Tooltip from '@mui/material/Tooltip';
 import Avatar from '@mui/material/Avatar';
 import { Route, BrowserRouter as Router, Routes, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -42,6 +41,7 @@ export default function Navbar(props: { addCards: any[] }) {
 
   const [searchField, setSearchField] = useState("");
   const { addCards } = props;
+
   const navigate = useNavigate();
 
   const handleChange = () => {
@@ -58,12 +58,7 @@ export default function Navbar(props: { addCards: any[] }) {
             color="inherit"
             aria-label="open drawer"
             sx={{ mr: 2 }}>
-            <Tooltip title="The name of the profiles">
-              <IconButton sx={{ p: 0 }}>
-                <Avatar alt="Z" src="/assets/img.jpg" />
-              </IconButton>
-            </Tooltip>
-
+            <Avatar alt="Z" src="/assets/img.jpg" />
           </IconButton>
           <Typography
             variant="h6"

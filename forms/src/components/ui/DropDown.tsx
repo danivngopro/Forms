@@ -1,14 +1,18 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import './DropDown.css'
-{/* <MoreVertIcon /> */}
+import { Route, BrowserRouter as Router, Routes, useNavigate } from 'react-router-dom';
+import { OneCard } from "../form/oneCard";
+import { DeleteCard } from "../form/deleteCard";
 
-function DropDown() {
+function DropDown(props: { singleCard: any }) {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const { singleCard } = props;
   const open = Boolean(anchorEl);
+  const navigate = useNavigate();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -18,10 +22,19 @@ function DropDown() {
     setAnchorEl(null);
   };
 
+  const navigateApiUpdate = () => {
+    navigate('/onecard');
+  };
+
+  const deleteCaard = () => {
+    navigate('/deleteCard');
+    setAnchorEl(null);
+  }
+
   return (
     <div>
 
-      <Button 
+      <Button
         id="basic-button"
         aria-controls={open ? "basic-menu" : undefined}
         aria-haspopup="true"
@@ -43,9 +56,14 @@ function DropDown() {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={handleClose}>עריכה</MenuItem>
-        <MenuItem onClick={handleClose}>מחיקה</MenuItem>
+        <MenuItem onClick={navigateApiUpdate}>עריכה</MenuItem>
+        <MenuItem onClick={deleteCaard}>מחיקה</MenuItem>
       </Menu>
+
+      <Routes>
+        <Route path="/onecard" element={<OneCard singleCard={singleCard} />} />
+        <Route path="/deleteCard" element={<DeleteCard />} />
+      </Routes>
 
     </div>
   );
