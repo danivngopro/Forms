@@ -4,7 +4,6 @@ import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
-import { pink } from '@material-ui/core/colors';
 import Grid from '@mui/material/Grid';
 import { IconButton } from '@mui/material';
 import DropDown from '../ui/DropDown';
@@ -37,7 +36,7 @@ export const Cards = (props: { filterCard: any[], addCards: any[], flag: any }):
             <Card sx={{ maxWidth: 345, marginLeft: "10px" }} onClick={handleChange}>
               <CardHeader
                 avatar={
-                  <Avatar sx={{ bgcolor: pink[500], img: "assets/img.jpg" }} aria-label="recipe">
+                  <Avatar sx={{ bgcolor: 'pink', img: "assets/img.jpg" }} aria-label="recipe">
                     ZD
                   </Avatar>
                 }
