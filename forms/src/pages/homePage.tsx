@@ -1,10 +1,8 @@
-import { Cards } from '../components/form/cards';
-import Link from '@mui/material/Link';
-import { Route, BrowserRouter as Router, Routes, useNavigate } from 'react-router-dom';
+// import Link from '@mui/material/Link';
+import { BrowserRouter as Router, Link, useNavigate } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab';
 import { styled } from '@mui/material/styles';
-import StateTextFields from '../components/form/addCard';
 import Navbar from '../components/form/navbar';
 import { useState } from "react";
 
@@ -27,24 +25,25 @@ export function HomePage() {
   };
 
   const navigateApiCards = () => {
-    navigate('/cards');
+    navigate('/cards' , {
+      state:{
+        filterCard:[],
+        addCards:addCards,
+        flag:false
+      }
+    }
+    );
   }
 
   return (
     <>
       <Navbar addCards={addCards} />
-      <Link sx={{ color: "#2771b0", fontWeight: "bold", margin: "700px" }} onClick={navigateApiCards} underline="none">
+      <Link to="/cards" state={{filterCard:[],addCards:addCards,flag:false}} onClick={navigateApiCards}>
         {'הסקרים שלי'}
       </Link>
       <StyledFab className="addIcon" color="primary" aria-label="add">
         <AddIcon type="button" onClick={navigateApiNewSurvey} />
       </StyledFab>
-      
-      <Routes>
-        <Route path="/cards" element={<Cards filterCard={[]} addCards={addCards} flag={false}  />} />
-        <Route path="/newSurvey" element={<StateTextFields />} />
-      </Routes>
-
     </>
   )
 }

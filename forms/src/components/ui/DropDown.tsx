@@ -22,15 +22,19 @@ function DropDown(props: { singleCard: any }) {
     setAnchorEl(null);
   };
 
-  const navigateApiUpdate = () => {
-    navigate('/onecard');
-  };
-
   const deleteCaard = () => {
     navigate('/deleteCard');
     setAnchorEl(null);
   }
 
+  const navigateApiUpdate = () => {
+    navigate('/onecard' , {
+      state:{
+        singleCard:{singleCard}
+      }
+    }
+    );
+  }
   return (
     <div>
 
@@ -59,11 +63,6 @@ function DropDown(props: { singleCard: any }) {
         <MenuItem onClick={navigateApiUpdate}>עריכה</MenuItem>
         <MenuItem onClick={deleteCaard}>מחיקה</MenuItem>
       </Menu>
-
-      <Routes>
-        <Route path="/onecard" element={<OneCard singleCard={singleCard} />} />
-        <Route path="/deleteCard" element={<DeleteCard />} />
-      </Routes>
 
     </div>
   );

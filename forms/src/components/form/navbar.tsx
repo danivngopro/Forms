@@ -6,9 +6,8 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import SearchIcon from '@mui/icons-material/Search';
 import Avatar from '@mui/material/Avatar';
-import { Route, BrowserRouter as Router, Routes, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { SearchNav } from './search';
+import { Route, BrowserRouter as Router, useNavigate } from 'react-router-dom';
+// import { useState, useEffect } from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 
@@ -39,14 +38,31 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 
 export default function Navbar(props: { addCards: any[] }) {
 
-  const [searchField, setSearchField] = useState("");
+  // const [searchField, setSearchField] = useState("");
+  // const [filterCards, setFilterCards] = useState<{ title: String }[]>([])
   const { addCards } = props;
+  let filterCards:any[]=[];
 
   const navigate = useNavigate();
 
-  const handleChange = () => {
-    navigate("/SearchNav")
-  };
+  const navigateApiSearch = (newInputValue:String) => {
+
+    addCards.filter((card: { title: String }) => {
+      if (card.title === newInputValue) {
+        filterCards.push(card)
+        // setFilterCards([...filterCards, card])
+      }
+    });
+
+    navigate('/cards', {
+      state: {
+        filterCard: filterCards,
+        addCards: [],
+        flag: true
+      }
+    });
+
+  }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -73,8 +89,8 @@ export default function Navbar(props: { addCards: any[] }) {
             </SearchIconWrapper>
             <Autocomplete
               onInputChange={(event, newInputValue) => {
-                setSearchField(newInputValue);
-                handleChange();
+                // setSearchField(newInputValue);
+                navigateApiSearch(newInputValue);
               }}
               disablePortal
               id="combo-box-demo"
@@ -84,9 +100,6 @@ export default function Navbar(props: { addCards: any[] }) {
           </Search>
         </Toolbar>
       </AppBar>
-      <Routes>
-        <Route path='/SearchNav' element={<SearchNav searchField={searchField} addCards={addCards} />}></Route>
-      </Routes>
     </Box>
   );
 }

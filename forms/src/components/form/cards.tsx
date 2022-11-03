@@ -8,46 +8,42 @@ import { pink } from '@material-ui/core/colors';
 import Grid from '@mui/material/Grid';
 import { IconButton } from '@mui/material';
 import DropDown from '../ui/DropDown';
-import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
 
-export const Cards = (props: { filterCard: any[], addCards: any[], flag: any }): JSX.Element => {
+export const Cards = () => {
 
-  let { addCards } = props;
-  let { filterCard } = props;
-  let { flag } = props;
+  const [enterTime, setEnterTime] = useState("");
+  const location =useLocation ();
+  let addCards  = location.state.addCards;
+  let filterCard  = location.state.filterCard;
+  let  flag  = location.state.flag;
 
+  
   if (flag){
-    console.log(flag)
     addCards = filterCard ;
   }    
-  const [enterTime, setEnterTime] = useState("");
+
+  flag=false;
 
   const handleChange = () => {
     setEnterTime(new Date().toLocaleString())
   };
 
-  flag=false;
-
   return (<>
     <div>
       {
         <Grid sx={{ marginLeft: "10px", marginTop: "13px" }} container spacing={0}>
-          {addCards.map((singleCard, index) =>
+          {addCards.map((singleCard: { title: any; }, index: any) =>
             <Card sx={{ maxWidth: 345, marginLeft: "10px" }} onClick={handleChange}>
               <CardHeader
-                avatar={
-                  <Avatar sx={{ bgcolor: pink[500], img: "assets/img.jpg" }} aria-label="recipe">
-                    ZD
-                  </Avatar>
-                }
                 action={
                   <IconButton aria-label="settings">
                     <DropDown singleCard={singleCard} />
                   </IconButton>
                 }
                 title={singleCard.title}
-                subheader="October 20, 2022" />
+                subheader="The date the survey was created" />
               <CardMedia
                 component="img"
                 height="150"
