@@ -2,7 +2,9 @@ import "./SurveySection.scss";
 
 function SurveySection(props: { text: string }) {
   return (
-    <h1>survey Section {props.text}</h1>
+    <div className="survey-section-container">
+      <h1>{props.text}</h1>
+    </div>
   );
 }
 
