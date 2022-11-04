@@ -4,12 +4,52 @@ import SurveyTitle from "./components/form/SurveyTitle/SurveyTitle";
 import "./SurveyCreationPage.scss";
 import plus from "../../assets/plus.svg";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { iSurvey } from "../../interfaces/iSurvey";
 
 function SurveyCreationPage(props: { surveyName: string }) {
-  const [sections, setSections] = useState(["a", "b", "c", "d"]);
+  const [sections, setSections] = useState([
+    {
+      id: "123456123456123456123456",
+      creatorId: "123456123456123456123456",
+      surveyName: "אברה קדברה אתה סוס",
+      content: [
+        {
+          id: "123456123456123456123456",
+          questionName: "מה קורה?",
+          questionType: "radio",
+          answers: [
+            { id: "123456123456123456123456", answer: "בסדר" },
+            { id: "12345612345612345612345a", answer: "בסדר גמור אפילו" },
+            { id: "12345612345612345612345b", answer: "על הפנים" },
+            { id: "123456123456123456z2345b", answer: "שורד." },
+          ],
+        },
+      ],
+    },
+  ]);
 
   const addSection = () => {
-    setSections([...sections, "e"]);
+    setSections([
+      ...sections,
+      {
+        id: "123456123456123456123456",
+        creatorId: "123456123456123456123456",
+        surveyName: "אברה קדברה אתה סוס",
+        content: [
+          {
+            id: "123456123456123456123456",
+            questionName: "מה קורה?",
+            questionType: "radio",
+            answers: [
+              { id: "123456123456123456123456", answer: "בסדר" },
+              { id: "12345612345612345612345a", answer: "בסדר גמור אפילו" },
+              { id: "12345612345612345612345b", answer: "על הפנים" },
+              { id: "123456123456123456z2345b", answer: "שורד." },
+            ],
+          },
+        ],
+      },
+    ]);
   };
 
   const handleOnDragEnd = (result: any) => {
@@ -32,7 +72,11 @@ function SurveyCreationPage(props: { surveyName: string }) {
           <DragDropContext onDragEnd={handleOnDragEnd}>
             <Droppable droppableId="characters">
               {(provided) => (
-                <ul className="survey-creation-page-secion-list" {...provided.droppableProps} ref={provided.innerRef}>
+                <ul
+                  className="survey-creation-page-secion-list"
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                >
                   {sections.map((section, i) => (
                     <Draggable key={i} draggableId={`id${i}`} index={i}>
                       {(provided) => (
@@ -41,7 +85,7 @@ function SurveyCreationPage(props: { surveyName: string }) {
                           {...provided.dragHandleProps}
                           ref={provided.innerRef}
                         >
-                          <SurveySection text={section} />
+                          <SurveySection section={section as iSurvey} />
                         </li>
                       )}
                     </Draggable>
