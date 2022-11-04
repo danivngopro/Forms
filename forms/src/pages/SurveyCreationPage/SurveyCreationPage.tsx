@@ -71,7 +71,7 @@ function SurveyCreationPage(props: { surveyName: string }) {
                           {...provided.dragHandleProps}
                           ref={provided.innerRef}
                         >
-                          <SurveySection section={section as iQuestion} />
+                          <SurveySection section={section} />
                         </li>
                       )}
                     </Draggable>
