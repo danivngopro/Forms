@@ -1,17 +1,19 @@
 import "./SurveyTitle.scss";
 import { useState } from "react";
-import TextField from "@mui/material/TextField/TextField";
+import { useTranslation } from "react-i18next";
+import TextField from "@mui/material/TextField";
 
 function SurveyTitle(props: { surveyName: string }) {
+  const { t } = useTranslation();
+
   const [surveyName, setSurveyName] = useState(props.surveyName);
 
-  if (surveyName === "" || !surveyName) setSurveyName("סקר חדש");
+  if (surveyName === "" || !surveyName) setSurveyName(t('newSurvey') as string);
 
   return (
     <div className="survey-title-container">
-      <TextField id="standard-basic" label="Standard" variant="standard" />
-      <h1>{surveyName}</h1>
-      <h3>תיאור הסקר</h3>
+      <input type='text' className='survey-title-text-input_survey_name' placeholder={surveyName}/>
+      <input type='text' className='survey-title-text-input_survey_description' placeholder={t('surveyDescription')}/>
     </div>
   );
 }
