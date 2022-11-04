@@ -4,26 +4,19 @@ import SurveyTitle from "./components/form/SurveyTitle/SurveyTitle";
 import "./SurveyCreationPage.scss";
 import plus from "../../assets/plus.svg";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { iSurvey } from "../../interfaces/iSurvey";
+import { iQuestion } from "../../interfaces/iQuestion";
 
 function SurveyCreationPage(props: { surveyName: string }) {
   const [sections, setSections] = useState([
     {
       id: "123456123456123456123456",
-      creatorId: "123456123456123456123456",
-      surveyName: "אברה קדברה אתה סוס",
-      content: [
-        {
-          id: "123456123456123456123456",
-          questionName: "מה קורה?",
-          questionType: "radio",
-          answers: [
-            { id: "123456123456123456123456", answer: "בסדר" },
-            { id: "12345612345612345612345a", answer: "בסדר גמור אפילו" },
-            { id: "12345612345612345612345b", answer: "על הפנים" },
-            { id: "123456123456123456z2345b", answer: "שורד." },
-          ],
-        },
+      questionName: "מה קורה?",
+      questionType: "radio",
+      answers: [
+        { id: "123456123456123456123456", answer: "בסדר" },
+        { id: "12345612345612345612345a", answer: "בסדר גמור אפילו" },
+        { id: "12345612345612345612345b", answer: "על הפנים" },
+        { id: "123456123456123456z2345b", answer: "שורד." },
       ],
     },
   ]);
@@ -33,20 +26,13 @@ function SurveyCreationPage(props: { surveyName: string }) {
       ...sections,
       {
         id: "123456123456123456123456",
-        creatorId: "123456123456123456123456",
-        surveyName: "אברה קדברה אתה סוס",
-        content: [
-          {
-            id: "123456123456123456123456",
-            questionName: "מה קורה?",
-            questionType: "radio",
-            answers: [
-              { id: "123456123456123456123456", answer: "בסדר" },
-              { id: "12345612345612345612345a", answer: "בסדר גמור אפילו" },
-              { id: "12345612345612345612345b", answer: "על הפנים" },
-              { id: "123456123456123456z2345b", answer: "שורד." },
-            ],
-          },
+        questionName: "מה קורה?",
+        questionType: "radio",
+        answers: [
+          { id: "123456123456123456123456", answer: "בסדר" },
+          { id: "12345612345612345612345a", answer: "בסדר גמור אפילו" },
+          { id: "12345612345612345612345b", answer: "על הפנים" },
+          { id: "123456123456123456z2345b", answer: "שורד." },
         ],
       },
     ]);
@@ -85,7 +71,7 @@ function SurveyCreationPage(props: { surveyName: string }) {
                           {...provided.dragHandleProps}
                           ref={provided.innerRef}
                         >
-                          <SurveySection section={section as iSurvey} />
+                          <SurveySection section={section as iQuestion} />
                         </li>
                       )}
                     </Draggable>

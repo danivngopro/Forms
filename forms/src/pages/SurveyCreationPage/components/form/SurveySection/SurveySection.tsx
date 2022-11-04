@@ -1,10 +1,10 @@
 import "./SurveySection.scss";
-import { iSurvey } from '../../../../../interfaces/iSurvey';
+import { iQuestion } from "../../../../../interfaces/iQuestion";
 
-function SurveySection(props: { section: iSurvey }) {
+function SurveySection(props: { section: iQuestion }) {
   return (
     <div className="survey-section-container">
-      <h1>{props.section.content[0].questionName}</h1>
+      <h1>{props.section.questionName}</h1>
     </div>
   );
 }
