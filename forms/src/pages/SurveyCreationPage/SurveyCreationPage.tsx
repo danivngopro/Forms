@@ -4,14 +4,14 @@ import SurveyTitle from "./components/form/SurveyTitle/SurveyTitle";
 import "./SurveyCreationPage.scss";
 import plus from "../../assets/plus.svg";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { iQuestion } from "../../interfaces/iQuestion";
+import { iQuestion, QuestionType } from "../../interfaces/iQuestion";
 
 function SurveyCreationPage(props: { surveyName: string }) {
   const [sections, setSections] = useState([
     {
       id: "123456123456123456123456",
       questionName: "מה קורה?",
-      questionType: "radio",
+      questionType: QuestionType.radio,
       answers: [
         { id: "123456123456123456123456", answer: "בסדר" },
         { id: "12345612345612345612345a", answer: "בסדר גמור אפילו" },
@@ -26,8 +26,8 @@ function SurveyCreationPage(props: { surveyName: string }) {
       ...sections,
       {
         id: "123456123456123456123456",
-        questionName: "מה קורה?",
-        questionType: "radio",
+        questionName: "??מה קורה?",
+        questionType: QuestionType.checkbox,
         answers: [
           { id: "123456123456123456123456", answer: "בסדר" },
           { id: "12345612345612345612345a", answer: "בסדר גמור אפילו" },
