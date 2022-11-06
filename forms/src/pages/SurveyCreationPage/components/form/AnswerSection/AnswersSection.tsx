@@ -1,3 +1,4 @@
+import './AnswersSection.scss'
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { iAnswer } from "../../../../../interfaces/iAnswer";
@@ -15,7 +16,7 @@ function AnswersSection(props: {
   return (
     <input
       type="text"
-      className="survey-section-input_question_name"
+      className="survey-section-answer"
       value={answer}
       onChange={(e) => {
         setAnswer(e.target.value);
