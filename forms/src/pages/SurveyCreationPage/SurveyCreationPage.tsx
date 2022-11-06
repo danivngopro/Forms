@@ -4,7 +4,7 @@ import SurveyTitle from "./components/form/SurveyTitle/SurveyTitle";
 import "./SurveyCreationPage.scss";
 import plus from "../../assets/plus.svg";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { iQuestion, QuestionType } from "../../interfaces/iQuestion";
+import { QuestionType } from "../../interfaces/iQuestion";
 
 function SurveyCreationPage(props: { surveyName: string }) {
   const [sections, setSections] = useState([
@@ -14,7 +14,7 @@ function SurveyCreationPage(props: { surveyName: string }) {
       questionType: QuestionType.radio,
       answers: [
         { id: "123456123456123456123456", answer: "בסדר" },
-        { id: "12345612345612345612345a", answer: "בסדר גמור אפילו" },
+        { id: "12345612345612345612345a", answer: "" },
         { id: "12345612345612345612345b", answer: "על הפנים" },
         { id: "123456123456123456z2345b", answer: "שורד." },
       ],
@@ -50,7 +50,6 @@ function SurveyCreationPage(props: { surveyName: string }) {
   return (
     <div className="survey-creation-page-container">
       <div className="survey-creation-page-container-without-plus_svg">
-        <h1>hello creation page</h1>
         <div className="survey-creation-page-title-container">
           <SurveyTitle surveyName={props.surveyName} />
         </div>

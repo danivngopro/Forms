@@ -2,7 +2,7 @@ import { iQuestion } from "./iQuestion";
 
 export interface iSurvey {
   id?: string;
-  creatorId: string; //add in joi and stuff
+  creatorId: string;
   surveyName: string;
   content: Array<iQuestion>;
 }

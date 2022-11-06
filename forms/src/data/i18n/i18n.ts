@@ -7,17 +7,36 @@ import { initReactI18next } from "react-i18next";
 const resources = {
   en: {
     translation: {
-      "newSurvey": "new survey",
-      'surveyDescription': 'survey description'
-
-    }
+      newSurvey: "new survey",
+      surveyDescription: "survey description",
+      newQuestion: "type your question",
+      newAnswer: "add answer",
+      questionType: "question type",
+      selectQuestionType: {
+        radio: 'radio',
+        checkbox: 'checkbox',
+        select: 'select',
+        shortAnswer: 'shortAnswer',
+        longAnswer: 'longAnswer',
+      },
+    },
   },
   he: {
     translation: {
-      "newSurvey": "סקר חדש",
-      'surveyDescription': 'תיאור הסקר'
-    }
-  }
+      newSurvey: "סקר חדש",
+      surveyDescription: "תיאור הסקר",
+      newQuestion: "כתוב שאלה חדשה",
+      newAnswer: "הוסף תשובה",
+      questionType: "בחר/י סוג שאלה",
+      selectQuestionType: {
+        radio: 'רדיו',
+        checkbox: 'תיבת סימון',
+        select: 'בחירה',
+        shortAnswer: 'תשובה קצרה',
+        longAnswer: 'תשובה ארוכה',
+      },
+    },
+  },
 };
 
 i18n
@@ -29,8 +48,8 @@ i18n
     // if you're using a language detector, do not define the lng option
 
     interpolation: {
-      escapeValue: false // react already safes from xss
-    }
+      escapeValue: false, // react already safes from xss
+    },
   });
 
-  export default i18n;
+export default i18n;
