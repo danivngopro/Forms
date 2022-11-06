@@ -4,7 +4,7 @@ import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab';
 import { styled } from '@mui/material/styles';
 import Navbar from '../components/form/navbar';
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 export function HomePage() {
 
@@ -24,7 +24,7 @@ export function HomePage() {
     navigate('/newSurvey');
   };
 
-  const navigateApiCards = () => {
+  useEffect(() => {
     navigate('/cards' , {
       state:{
         filterCard:[],
@@ -33,14 +33,11 @@ export function HomePage() {
       }
     }
     );
-  }
+}, []);
 
   return (
     <>
       <Navbar addCards={addCards} />
-      <Link to="/cards" state={{filterCard:[],addCards:addCards,flag:false}} onClick={navigateApiCards}>
-        {'הסקרים שלי'}
-      </Link>
       <StyledFab className="addIcon" color="primary" aria-label="add">
         <AddIcon type="button" onClick={navigateApiNewSurvey} />
       </StyledFab>
