@@ -1,12 +1,13 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import SurveyCreationPage from "./pages/SurveyAnswerPage/SurveyCreationPage"; // change
+import SubmitAnswerPage from "./pages/SubmitAnswerPage/SubmitAnswerPage";
+
 
 function App() {
   return (
-    <div className="survey-creation-name-container">
+    <div className="survey-answers-name-container">
       <Routes>
-        <Route path="/answerSurvey" element={<SurveyAnswerPage />} />
+        <Route path="/answerSurvey" element={<SubmitAnswerPage />} /> 
       </Routes>
     </div>
   );
