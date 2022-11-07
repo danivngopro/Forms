@@ -1,12 +1,18 @@
 import "./SurveySection.scss";
 import { iQuestion, QuestionType } from "../../../../../interfaces/iQuestion";
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { iAnswer } from "../../../../../interfaces/iAnswer";
 import AnswersSection from "../AnswerSection/AnswersSection";
 import QuestionTypeSelection from "../QuestionTypeSelection/QuestionTypeSelection";
 
-function SurveySection(props: { section: iQuestion, updateSectionCallBack: any }) {
+function SurveySection(props: {
+  section: iQuestion;
+  handleNewAnswers: any;
+  handleNewQuestionName: any;
+  handleNewQuestionType: any;
+  index: number;
+}) {
   const { t } = useTranslation();
 
   const [questionType, setQuestionType] = useState(props.section.questionType);
@@ -22,30 +28,17 @@ function SurveySection(props: { section: iQuestion, updateSectionCallBack: any }
     const tempArr = answers as iAnswer[];
     tempArr[index].answer = newAnswer;
     setAnswers(tempArr);
-    const newSection = props.section;
-    newSection.answers = answers;
-    props.updateSectionCallBack(newSection)
+    props.handleNewAnswers(answers, props.index);
   };
 
-  const handleQuestionTypeSelectionCallBack = (newType: string) => {
-    switch (newType) {
-      case t("selectQuestionType.radio"):
-        setQuestionType(QuestionType.checkbox);
-        break;
-      case t("selectQuestionType.longAnswer"):
-        setQuestionType(QuestionType.longAnswer);
-        break;
-      case t("selectQuestionType.select"):
-        setQuestionType(QuestionType.select);
-        break;
-      case t("selectQuestionType.shortAnswer"):
-        setQuestionType(QuestionType.shortAnswer);
-        break;
+  const handleQuestionTypeSelectionCallBack = async (newType: QuestionType) => {
+    await setQuestionType(newType);
+    props.handleNewQuestionType(newType, props.index);
+  };
 
-      default:
-        setQuestionType(QuestionType.radio);
-        break;
-    }
+  const handleQuestionNameCallBack = (e: ChangeEvent<HTMLInputElement>) => {
+    setQuestionName(e.target.value);
+    props.handleNewQuestionName(questionName, props.index);
   };
 
   useEffect(() => {
@@ -55,19 +48,13 @@ function SurveySection(props: { section: iQuestion, updateSectionCallBack: any }
     checkQuestionName();
   }, [props.section]);
 
-  useEffect(() => {
-    const newSection = props.section;
-    newSection.questionName = questionName;
-    newSection.questionType = questionType;
-    props.updateSectionCallBack(newSection)
-    
-  }, [questionType,questionName])
-  
-
   return (
     <div className="survey-section-container">
       <div className="survey-section-input_question_type">
-        <QuestionTypeSelection selected={questionType} callback={handleQuestionTypeSelectionCallBack} />
+        <QuestionTypeSelection
+          selected={questionType}
+          callback={handleQuestionTypeSelectionCallBack}
+        />
         <span className="survey-section-input_question_type_text">
           {t("questionType")}
         </span>
@@ -78,7 +65,7 @@ function SurveySection(props: { section: iQuestion, updateSectionCallBack: any }
         className="survey-section-input_question_name"
         value={questionName}
         onChange={(e) => {
-          setQuestionName(e.target.value);
+          handleQuestionNameCallBack(e);
         }}
       />
 

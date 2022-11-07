@@ -14,26 +14,48 @@ function QuestionTypeSelection(props: {
 
   const handleChange = (event: SelectChangeEvent) => {
     setQuestionType(event.target.value);
-    props.callback(event.target.value);
+
+    switch (event.target.value) {
+      case t("selectQuestionType.checkbox"):
+        props.callback(QuestionType.checkbox);
+        break;
+      case t("selectQuestionType.longAnswer"):
+        props.callback(QuestionType.longAnswer);
+        break;
+      case t("selectQuestionType.select"):
+        props.callback(QuestionType.select);
+        break;
+      case t("selectQuestionType.shortAnswer"):
+        props.callback(QuestionType.shortAnswer);
+        break;
+      case t("selectQuestionType.radio"):
+        props.callback(QuestionType.radio);
+        break;
+
+      default:
+        break;
+    }
   };
 
   useEffect(() => {
     switch (props.selected) {
-      case t(QuestionType.checkbox):
+      case QuestionType.checkbox:
         setQuestionType(t("selectQuestionType.checkbox") as string);
         break;
-      case t(QuestionType.longAnswer):
+      case QuestionType.longAnswer:
         setQuestionType(t("selectQuestionType.longAnswer") as string);
         break;
-      case t(QuestionType.select):
+      case QuestionType.select:
         setQuestionType(t("selectQuestionType.select") as string);
         break;
-      case t(QuestionType.shortAnswer):
+      case QuestionType.shortAnswer:
         setQuestionType(t("selectQuestionType.shortAnswer") as string);
+        break;
+      case QuestionType.radio:
+        setQuestionType(t("selectQuestionType.radio") as string);
         break;
 
       default:
-        setQuestionType(t("selectQuestionType.radio") as string);
         break;
     }
   }, [props.selected]);

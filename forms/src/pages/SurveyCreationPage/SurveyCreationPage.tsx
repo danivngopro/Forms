@@ -5,6 +5,7 @@ import "./SurveyCreationPage.scss";
 import plus from "../../assets/plus.svg";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { iQuestion, QuestionType } from "../../interfaces/iQuestion";
+import { iAnswer } from "../../interfaces/iAnswer";
 
 function SurveyCreationPage(props: { surveyName: string }) {
   const mock: iQuestion = {
@@ -19,9 +20,7 @@ function SurveyCreationPage(props: { surveyName: string }) {
     ],
   };
 
-  const [sections, setSections]= useState([
-    mock
-  ]);
+  const [sections, setSections] = useState([mock]);
 
   const addSection = () => {
     setSections([
@@ -42,19 +41,34 @@ function SurveyCreationPage(props: { surveyName: string }) {
 
   const handleOnDragEnd = (result: any) => {
     if (!result.destination) return;
+    console.log(sections);
     const items = Array.from(sections);
     const [recordedItems] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, recordedItems);
-
+    console.log(1);
     setSections(items);
   };
 
-  const handleSectionCallBack = (section: iQuestion, i:number) => {
+  const handleNewAnswers = (newAnswers: iAnswer[], i: number) => {
     const items = Array.from(sections) as iQuestion[];
-    items[i] = section;
-
+    items[i].answers = newAnswers;
+    console.log(2);
     setSections(items);
-  }
+  };
+
+  const handleNewQuestionName = (newQuestionName: string, i: number) => {
+    const items = Array.from(sections) as iQuestion[];
+    items[i].questionName = newQuestionName;
+    console.log(3);
+    setSections(items);
+  };
+
+  const handleNewQuestionType = (newQuestionType: QuestionType, i: number) => {
+    const items = Array.from(sections) as iQuestion[];
+    items[i].questionType = newQuestionType;
+    console.log(4);
+    setSections(items);
+  };
 
   return (
     <div className="survey-creation-page-container">
@@ -79,7 +93,13 @@ function SurveyCreationPage(props: { surveyName: string }) {
                           {...provided.dragHandleProps}
                           ref={provided.innerRef}
                         >
-                          <SurveySection section={section} updateSectionCallBack={handleSectionCallBack}/>
+                          <SurveySection
+                            section={section}
+                            handleNewAnswers={handleNewAnswers}
+                            handleNewQuestionName={handleNewQuestionName}
+                            handleNewQuestionType={handleNewQuestionType}
+                            index={i}
+                          />
                         </li>
                       )}
                     </Draggable>
