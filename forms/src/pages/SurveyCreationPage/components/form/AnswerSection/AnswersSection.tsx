@@ -1,5 +1,5 @@
 import './AnswersSection.scss'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { iAnswer } from "../../../../../interfaces/iAnswer";
 
@@ -12,6 +12,11 @@ function AnswersSection(props: {
   const [answer, setAnswer] = useState(props.answer.answer);
 
   if (!answer || answer === "") setAnswer(t("newAnswer") as string);
+
+  useEffect(() => {
+    setAnswer(props.answer.answer) 
+  }, [props.answer])
+  
 
   return (
     <input

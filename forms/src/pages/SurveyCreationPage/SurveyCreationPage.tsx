@@ -4,21 +4,23 @@ import SurveyTitle from "./components/form/SurveyTitle/SurveyTitle";
 import "./SurveyCreationPage.scss";
 import plus from "../../assets/plus.svg";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { QuestionType } from "../../interfaces/iQuestion";
+import { iQuestion, QuestionType } from "../../interfaces/iQuestion";
 
 function SurveyCreationPage(props: { surveyName: string }) {
-  const [sections, setSections] = useState([
-    {
-      id: "123456123456123456123456",
-      questionName: "מה קורה?",
-      questionType: QuestionType.radio,
-      answers: [
-        { id: "123456123456123456123456", answer: "בסדר" },
-        { id: "12345612345612345612345a", answer: "" },
-        { id: "12345612345612345612345b", answer: "על הפנים" },
-        { id: "123456123456123456z2345b", answer: "שורד." },
-      ],
-    },
+  const mock: iQuestion = {
+    id: "123456123456123456123456",
+    questionName: "מה קורה?",
+    questionType: QuestionType.radio,
+    answers: [
+      { id: "123456123456123456123456", answer: "בסדר" },
+      { id: "12345612345612345612345a", answer: "" },
+      { id: "12345612345612345612345b", answer: "על הפנים" },
+      { id: "123456123456123456z2345b", answer: "שורד." },
+    ],
+  };
+
+  const [sections, setSections]= useState([
+    mock
   ]);
 
   const addSection = () => {
@@ -47,6 +49,13 @@ function SurveyCreationPage(props: { surveyName: string }) {
     setSections(items);
   };
 
+  const handleSectionCallBack = (section: iQuestion, i:number) => {
+    const items = Array.from(sections) as iQuestion[];
+    items[i] = section;
+
+    setSections(items);
+  }
+
   return (
     <div className="survey-creation-page-container">
       <div className="survey-creation-page-container-without-plus_svg">
@@ -70,7 +79,7 @@ function SurveyCreationPage(props: { surveyName: string }) {
                           {...provided.dragHandleProps}
                           ref={provided.innerRef}
                         >
-                          <SurveySection section={section} />
+                          <SurveySection section={section} updateSectionCallBack={handleSectionCallBack}/>
                         </li>
                       )}
                     </Draggable>
