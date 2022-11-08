@@ -5,7 +5,7 @@ import { useState } from "react";
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import { isPropertySignature } from "typescript";
-import {AnswerType} from "./components/form/surveyAnswer/answer/AnswerType"
+import AnswerType from "./components/form/surveyAnswer/answer/AnswerType"
 
 
 function SurveyCreationPage() {
@@ -25,7 +25,7 @@ function SurveyCreationPage() {
         },
         {
             "question": "Karnataka",
-            "answers": ['h', 'y', 's'],
+            "answers": ['בית', 'דלת', 'שולחן'],
             "questionType": "radio"
         }
     ]);
