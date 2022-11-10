@@ -1,6 +1,7 @@
 import "./AnswerType.scss";
 import { Box, Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, Typography } from "@material-ui/core";
 import { useState } from 'react';
+import { SelectChangeEvent } from "@mui/material";
 
 
 interface answerTypeProps {
@@ -13,18 +14,18 @@ function AnswerType({ questionsAndAnswers, handleSubmit }: answerTypeProps) {
   const [longAnswer, setLongAnswer] = useState('');
   const [select, setSelect] = useState('');
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: SelectChangeEvent) => {
     setSelect(event.target.value);
-    console.log(event.target.value);
   };
 
-  const handleAnswers = (type: string, answers: any[]) => {
+  const handleAnswers = (type: string, answers: any[], question: string) => {
     switch (type) {
       case "checkbox":
-        return (<div>{
+        return (<div className="answers-div">{
           answers.map((element: any, index: number) => {
             return (
               <FormControlLabel
+                key={index}
                 value={index}
                 control={<Checkbox color="primary" />}
                 label={element}
@@ -36,7 +37,7 @@ function AnswerType({ questionsAndAnswers, handleSubmit }: answerTypeProps) {
         }</div>)
 
       case "radio":
-        return (<div>{
+        return (<div className="answers-div">{
           <FormControl component="fieldset">
             <RadioGroup row aria-label="position" name="answer" defaultValue="top">
               {
@@ -44,6 +45,7 @@ function AnswerType({ questionsAndAnswers, handleSubmit }: answerTypeProps) {
                   let indexAsStr = `${(index)}`;
                   return (
                     <FormControlLabel
+                      key={index}
                       value={indexAsStr}
                       control={<Radio color="primary" />}
                       label={element}
@@ -62,57 +64,57 @@ function AnswerType({ questionsAndAnswers, handleSubmit }: answerTypeProps) {
 
       case "shortAnswer":
         return (
-          <input
-            type="text"
-            className="survey-section-input_question_name"
-            maxLength={70}
-            value={shortAnswer}
-            onChange={(e) => {
-              setShortAnswer(e.target.value);
-            }}
-          />
+          <div className="answers-div">
+            <input
+              type="text"
+              className="survey-section-input_question_name"
+              maxLength={70}
+              value={shortAnswer}
+              onChange={(e) => {
+                setShortAnswer(e.target.value);
+              }}
+            />
+          </div>
         );
 
       case "longAnswer":
         return (
-          <input
-            type="text"
-            className="survey-section-input_question_name"
-            maxLength={1000}
-            value={longAnswer}
-            onChange={(e) => {
-              setLongAnswer(e.target.value);
-            }}
-          />
+          <div className="answers-div">
+            <input
+              type="text"
+              className="survey-section-input_question_name"
+              maxLength={1000}
+              value={longAnswer}
+              onChange={(e) => {
+                setLongAnswer(e.target.value);
+              }}
+            />
+          </div>
+
         )
 
       case "select":
-        return (<div>
+        return (<div className="answers-div">
           {
-            answers.map((element: any, index: number) => {
-              return (
-                <FormControl variant="standard">
-                  <InputLabel id="demo-simple-select-standard-label">Select</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
-                    value={select}
-                    onChange={handleChange}
-                    label={element}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={element}>{element}</MenuItem>
-                  </Select>
-                </FormControl>
-              )
-            })
-          }
-        </div>
-
-
-        )
+            <FormControl variant="standard">
+              <InputLabel id="demo-simple-select-standard-label">Select</InputLabel>
+              <Select
+                labelId="demo-simple-select-standard-label"
+                id="demo-simple-select-standard"
+                value={select}
+                onChange={(e) => { handleChange(e as SelectChangeEvent) }}
+                label="select"
+              >
+                {
+                  answers.map((element: any, index: number) => {
+                    return (
+                      < MenuItem value={element} key={index}> {element}</MenuItem>
+                    )
+                  })
+                }
+              </Select>
+            </FormControl>
+          } </div >)
       default:
         return <></>;
     }
@@ -121,11 +123,11 @@ function AnswerType({ questionsAndAnswers, handleSubmit }: answerTypeProps) {
   return (
     <>
       {
-        questionsAndAnswers.map((questionAndAnswers) => {
+        questionsAndAnswers.map((questionAndAnswers, index) => {
           console.log(questionAndAnswers)
-          return <Box>
+          return <Box className="question-div"key={index}>
             <Typography>{questionAndAnswers.question}</Typography>
-            {handleAnswers(questionAndAnswers.questionType, questionAndAnswers.answers)}
+            {handleAnswers(questionAndAnswers.questionType, questionAndAnswers.answers, questionAndAnswers.question)}
           </Box>
         })
       }

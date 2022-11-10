@@ -12,24 +12,34 @@ function SurveyCreationPage() {
 
   const [sections, setSections] = React.useState([
     {
-      "question": "what",
+      "question": "checkbox question",
       "answers": ['אורי', 'דניאל', 'שי'],
       "questionType": "checkbox"
     },
     {
-      "question": "Gujarat",
+      "question": "shortAnswer question",
       "answers": ['אבא'],
       "questionType": "shortAnswer"
     },
     {
-      "question": "Karnataka",
+      "question": "radio question",
       "answers": ['בית', 'דלת', 'שולחן'],
       "questionType": "radio"
     },
     {
-      "question": "daniel haim ventura",
-      "answers": ['בית', 'דלת', 'שולחן'],
+      "question": "longAnswer question",
+      "answers": ['אאאאאאאאאא'],
       "questionType": "longAnswer"
+    },
+    {
+      "question": "select question",
+      "answers": ['a', 'b', 'c'],
+      "questionType": "select"
+    },
+    {
+      "question": "titel question",
+      "answers": ['Uri Goldenberg'],
+      "questionType": "title"
     }
   ]);
 
