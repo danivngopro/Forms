@@ -49,7 +49,7 @@ export default function Navbar(props: { addCards: any[] }) {
 
     addCards.filter((card: { title: String }) => {
       if (newInputValue === "")
-        filterCards = [];
+        filterCards = addCards;
       else
         if (((card.title).toString()).includes(newInputValue.toString()))
           // if (card.title === newInputValue) {
