@@ -38,8 +38,6 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 
 export default function Navbar(props: { addCards: any[] }) {
 
-  // const [searchField, setSearchField] = useState("");
-  // const [filterCards, setFilterCards] = useState<{ title: String }[]>([])
   const { addCards } = props;
   let filterCards: any[] = [];
 
@@ -52,9 +50,7 @@ export default function Navbar(props: { addCards: any[] }) {
         filterCards = addCards;
       else
         if (((card.title).toString()).includes(newInputValue.toString()))
-          // if (card.title === newInputValue) {
           filterCards.push(card)
-      // setFilterCards([...filterCards, card])
     });
 
     navigate('/cards', {
@@ -92,7 +88,6 @@ export default function Navbar(props: { addCards: any[] }) {
             </SearchIconWrapper>
             <Autocomplete
               onInputChange={(event, newInputValue) => {
-                // setSearchField(newInputValue);
                 navigateApiSearch(newInputValue);
               }}
               disablePortal

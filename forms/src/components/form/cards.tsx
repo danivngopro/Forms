@@ -2,7 +2,6 @@ import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import { IconButton } from '@mui/material';
@@ -12,7 +11,6 @@ import { useState } from 'react';
 
 export const Cards = () => {
 
-  const [enterTime, setEnterTime] = useState("");
   const location =useLocation ();
   let addCards  = location.state.addCards;
   let filterCard  = location.state.filterCard;
@@ -25,24 +23,13 @@ export const Cards = () => {
 
   flag=false;
 
-  const handleChange = () => {
-    setEnterTime(new Date().toLocaleString())
-  };
-
   return (<>
     <div>
       {
         <Grid sx={{ marginLeft: "10px", marginTop: "13px" }} container spacing={0}>
           {addCards.map((singleCard: { title: any; }, index: any) =>
-            <Card sx={{ maxWidth: 345, marginLeft: "10px" }} onClick={handleChange}>
+            <Card sx={{ maxWidth: 345, marginLeft: "10px" }}>
               <CardHeader
-
-                // avatar={
-                //   <Avatar sx={{ bgcolor: 'pink', img: "assets/img.jpg" }} aria-label="recipe">
-                //     ZD
-                //   </Avatar>
-                // }
-
                 action={
                   <IconButton aria-label="settings">
                     <DropDown singleCard={singleCard} />
@@ -57,7 +44,7 @@ export const Cards = () => {
                 alt="img" />
               <CardContent>
                 <Typography variant="body2" color="text.secondary">
-                  <div>open in: {enterTime}</div>
+                  <div>open in: {""}</div>
                 </Typography>
               </CardContent>
             </Card>
