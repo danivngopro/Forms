@@ -58,7 +58,7 @@ function QuestionTypeSelection(props: {
       default:
         break;
     }
-  }, [props.selected]);
+  }, [props.selected, t]);
 
   return (
     <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>

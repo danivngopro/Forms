@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useLayoutEffect, useState } from "react";
 import SurveySection from "./components/form/SurveySection/SurveySection";
 import SurveyTitle from "./components/form/SurveyTitle/SurveyTitle";
 import "./SurveyCreationPage.scss";
@@ -38,37 +38,46 @@ function SurveyCreationPage(props: { surveyName: string }) {
       },
     ]);
   };
+  let [newSections, setNewSections] = useState([mock]);
 
   const handleOnDragEnd = (result: any) => {
     if (!result.destination) return;
-    console.log(sections);
-    const items = Array.from(sections);
+    const items = sections;
     const [recordedItems] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, recordedItems);
-    console.log(1);
-    setSections(items);
+    setNewSections(items);
   };
 
-  const handleNewAnswers = (newAnswers: iAnswer[], i: number) => {
-    const items = Array.from(sections) as iQuestion[];
-    items[i].answers = newAnswers;
-    console.log(2);
-    setSections(items);
-  };
+  useLayoutEffect(() => {
+    setSections(newSections);
+  }, [newSections])
 
-  const handleNewQuestionName = (newQuestionName: string, i: number) => {
-    const items = Array.from(sections) as iQuestion[];
-    items[i].questionName = newQuestionName;
-    console.log(3);
-    setSections(items);
-  };
+  const handleNewAnswers = useCallback(
+    (newAnswers: iAnswer[], i: number) => {
+      const items = sections as iQuestion[];
+      items[i].answers = newAnswers;
+      setSections(items);
+    },
+    [sections]
+  );
 
-  const handleNewQuestionType = (newQuestionType: QuestionType, i: number) => {
-    const items = Array.from(sections) as iQuestion[];
-    items[i].questionType = newQuestionType;
-    console.log(4);
-    setSections(items);
-  };
+  const handleNewQuestionName = useCallback(
+    (newQuestionName: string, i: number) => {
+      const items = sections as iQuestion[];
+      items[i].questionName = newQuestionName;
+      setSections(items);
+    },
+    [sections]
+  );
+
+  const handleNewQuestionType = useCallback(
+    (newQuestionType: QuestionType, i: number) => {
+      const items = sections as iQuestion[];
+      items[i].questionType = newQuestionType;
+      setSections(items);
+    },
+    [sections]
+  );
 
   return (
     <div className="survey-creation-page-container">
@@ -85,6 +94,8 @@ function SurveyCreationPage(props: { surveyName: string }) {
                   {...provided.droppableProps}
                   ref={provided.innerRef}
                 >
+                  <>
+                  {console.log(sections)}
                   {sections.map((section, i) => (
                     <Draggable key={i} draggableId={`id${i}`} index={i}>
                       {(provided) => (
@@ -103,7 +114,7 @@ function SurveyCreationPage(props: { surveyName: string }) {
                         </li>
                       )}
                     </Draggable>
-                  ))}
+                  ))}</>
                   {provided.placeholder}
                 </ul>
               )}
