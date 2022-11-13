@@ -36,14 +36,13 @@ export const Cards = () => {
           {addCards.map((singleCard: { title: any; }, index: any) =>
             <Card sx={{ maxWidth: 345, marginLeft: "10px" }} onClick={handleChange}>
               <CardHeader
-<<<<<<< HEAD
-=======
-                avatar={
-                  <Avatar sx={{ bgcolor: 'pink', img: "assets/img.jpg" }} aria-label="recipe">
-                    ZD
-                  </Avatar>
-                }
->>>>>>> fbb5ce3010ca3de511ecb2c1dfa1bff4074f2706
+
+                // avatar={
+                //   <Avatar sx={{ bgcolor: 'pink', img: "assets/img.jpg" }} aria-label="recipe">
+                //     ZD
+                //   </Avatar>
+                // }
+
                 action={
                   <IconButton aria-label="settings">
                     <DropDown singleCard={singleCard} />

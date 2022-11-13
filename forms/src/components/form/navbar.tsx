@@ -41,17 +41,20 @@ export default function Navbar(props: { addCards: any[] }) {
   // const [searchField, setSearchField] = useState("");
   // const [filterCards, setFilterCards] = useState<{ title: String }[]>([])
   const { addCards } = props;
-  let filterCards:any[]=[];
+  let filterCards: any[] = [];
 
   const navigate = useNavigate();
 
-  const navigateApiSearch = (newInputValue:String) => {
+  const navigateApiSearch = (newInputValue: String) => {
 
     addCards.filter((card: { title: String }) => {
-      if (card.title === newInputValue) {
-        filterCards.push(card)
-        // setFilterCards([...filterCards, card])
-      }
+      if (newInputValue === "")
+        filterCards = [];
+      else
+        if (((card.title).toString()).includes(newInputValue.toString()))
+          // if (card.title === newInputValue) {
+          filterCards.push(card)
+      // setFilterCards([...filterCards, card])
     });
 
     navigate('/cards', {

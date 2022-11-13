@@ -8,7 +8,7 @@ import { useState,useEffect } from "react";
 
 export function HomePage() {
 
-  const [addCards, setAddCards] = useState<{ title: String }[]>([{ title: "סקר 1 " }, { title: "סקר 2 " }])
+  const [addCards, setAddCards] = useState<{ title: String }[]>([{ title: "סקר 1 " }, { title: "סקר 2 " },{ title: "NNBV" },{ title: "NNBA " }])
   const navigate = useNavigate();
 
   const StyledFab = styled(Fab)({
