@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { iAnswer } from "../../../../../interfaces/iAnswer";
 import { QuestionType } from "../../../../../interfaces/iQuestion";
 import CheckBoxAnswer from "./AnswerType/CheckBoxAnswer";
@@ -6,7 +5,6 @@ import LongAnswer from "./AnswerType/LongAnswer";
 import RadioAnswer from "./AnswerType/RadioAnswer";
 import SelectAnswer from "./AnswerType/SelectAnswer";
 import ShortAnswer from "./AnswerType/ShortAnswer";
-import RadioGroup from "@mui/material/RadioGroup";
 
 function AnswersSection(props: {
   answers: iAnswer[];
