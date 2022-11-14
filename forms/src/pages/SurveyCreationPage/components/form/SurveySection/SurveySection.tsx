@@ -42,7 +42,6 @@ function SurveySection(props: {
         setQuestionName(t("newQuestion") as string);
     };
 
-    console.log(123)
     setQuestionName(props.section.questionName);
     setQuestionType(props.section.questionType);
     setAnswers(props.section.answers);
