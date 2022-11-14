@@ -5,6 +5,7 @@ export interface iQuestion {
   questionName: string;
   questionType: QuestionType;
   answers?: Array<iAnswer>;
+  selectedAnswers?: Array<iAnswer>;
 }
 export enum QuestionType {
   shortAnswer = "shortAnswer",

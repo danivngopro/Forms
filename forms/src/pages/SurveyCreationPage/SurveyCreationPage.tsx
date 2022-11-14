@@ -50,7 +50,7 @@ function SurveyCreationPage(props: { surveyName: string }) {
 
   useLayoutEffect(() => {
     setSections(newSections);
-  }, [newSections])
+  }, [newSections]);
 
   const handleNewAnswers = useCallback(
     (newAnswers: iAnswer[], i: number) => {
@@ -94,8 +94,6 @@ function SurveyCreationPage(props: { surveyName: string }) {
                   {...provided.droppableProps}
                   ref={provided.innerRef}
                 >
-                  <>
-                  {console.log(sections)}
                   {sections.map((section, i) => (
                     <Draggable key={i} draggableId={`id${i}`} index={i}>
                       {(provided) => (
@@ -114,7 +112,7 @@ function SurveyCreationPage(props: { surveyName: string }) {
                         </li>
                       )}
                     </Draggable>
-                  ))}</>
+                  ))}
                   {provided.placeholder}
                 </ul>
               )}

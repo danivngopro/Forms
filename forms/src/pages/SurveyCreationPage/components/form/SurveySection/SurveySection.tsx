@@ -19,22 +19,31 @@ function SurveySection(props: {
   const [questionName, setQuestionName] = useState(props.section.questionName);
   const [answers, setAnswers] = useState(props.section.answers);
 
-  const handleUpdateAnswersCallBack = useCallback((newAnswer: string, index: number) => {
-    const tempArr = answers as iAnswer[];
-    tempArr[index].answer = newAnswer;
-    setAnswers(tempArr);
-    props.handleNewAnswers(answers, props.index);
-  }, [answers, props]);
+  const handleUpdateAnswersCallBack = useCallback(
+    (newAnswer: string, index: number) => {
+      const tempArr = answers as iAnswer[];
+      tempArr[index].answer = newAnswer;
+      setAnswers(tempArr);
+      props.handleNewAnswers(answers, props.index);
+    },
+    [answers, props]
+  );
 
-  const handleQuestionTypeSelectionCallBack = useCallback(async (newType: QuestionType) => {
-    await setQuestionType(newType);
-    props.handleNewQuestionType(newType, props.index);
-  }, [props]);
+  const handleQuestionTypeSelectionCallBack = useCallback(
+    async (newType: QuestionType) => {
+      await setQuestionType(newType);
+      props.handleNewQuestionType(newType, props.index);
+    },
+    [props]
+  );
 
-  const handleQuestionNameCallBack = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setQuestionName(e.target.value);
-    props.handleNewQuestionName(questionName, props.index);
-  }, [props, questionName]);
+  const handleQuestionNameCallBack = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setQuestionName(e.target.value);
+      props.handleNewQuestionName(questionName, props.index);
+    },
+    [props, questionName]
+  );
 
   useEffect(() => {
     const checkQuestionName = () => {
@@ -46,9 +55,13 @@ function SurveySection(props: {
     setQuestionType(props.section.questionType);
     setAnswers(props.section.answers);
     checkQuestionName();
-  }, [props.section.answers, props.section.questionName, props.section.questionType, questionName, t]);
-
-  
+  }, [
+    props.section.answers,
+    props.section.questionName,
+    props.section.questionType,
+    questionName,
+    t,
+  ]);
 
   return (
     <div className="survey-section-container">
@@ -72,17 +85,11 @@ function SurveySection(props: {
           }}
         />
       </div>
-      {answers?.map((answer, i) => {
-        return (
-          <div key={i}>
-            <AnswersSection
-              answer={answer}
-              index={i}
-              callback={handleUpdateAnswersCallBack}
-            />
-          </div>
-        );
-      })}
+      <AnswersSection
+        answers={answers as iAnswer[]}
+        questionType={questionType}
+        handleUpdateAnswersCallBack={handleUpdateAnswersCallBack}
+      />
     </div>
   );
 }

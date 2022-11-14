@@ -1,34 +1,110 @@
-import './AnswersSection.scss'
-import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useState } from "react";
 import { iAnswer } from "../../../../../interfaces/iAnswer";
+import { QuestionType } from "../../../../../interfaces/iQuestion";
+import CheckBoxAnswer from "./AnswerType/CheckBoxAnswer";
+import LongAnswer from "./AnswerType/LongAnswer";
+import RadioAnswer from "./AnswerType/RadioAnswer";
+import SelectAnswer from "./AnswerType/SelectAnswer";
+import ShortAnswer from "./AnswerType/ShortAnswer";
+import RadioGroup from "@mui/material/RadioGroup";
 
 function AnswersSection(props: {
-  answer: iAnswer;
-  index: number;
-  callback: any;
+  answers: iAnswer[];
+  questionType: QuestionType;
+  handleUpdateAnswersCallBack: any;
 }) {
-  const { t } = useTranslation();
-  const [answer, setAnswer] = useState(props.answer.answer);
+  const detectAnswer = () => {
+    let ans = <div></div>;
+    switch (props.questionType) {
+      case QuestionType.checkbox:
+        console.log(1);
+        ans = (
+          <div>
+            {props.answers?.map((answer, i) => {
+              return (
+                <div key={i}>
+                  <CheckBoxAnswer
+                    answer={answer}
+                    index={i}
+                    handleUpdateAnswersCallBack={
+                      props.handleUpdateAnswersCallBack
+                    }
+                  />
+                </div>
+              );
+            })}
+          </div>
+        );
+        break;
+      case QuestionType.longAnswer:
+        ans = (
+          <div>
+            <LongAnswer
+              answer={props.answers[0]}
+              handleUpdateAnswersCallBack={props.handleUpdateAnswersCallBack}
+            />
+          </div>
+        );
+        break;
+      case QuestionType.radio:
+        ans = (
+          <div>
+            {props.answers?.map((answer, i) => {
+              return (
+                <div key={i}>
+                  <RadioAnswer
+                    answer={answer}
+                    index={i}
+                    handleUpdateAnswersCallBack={
+                      props.handleUpdateAnswersCallBack
+                    }
+                  />
+                </div>
+              );
+            })}
+          </div>
+        );
+        break;
 
-  if (!answer || answer === "") setAnswer(t("newAnswer") as string);
+      case QuestionType.select:
+        ans = (
+          <div>
+            {props.answers?.map((answer, i) => {
+              return (
+                <div key={i}>
+                  <SelectAnswer
+                    answer={answer}
+                    index={i}
+                    handleUpdateAnswersCallBack={
+                      props.handleUpdateAnswersCallBack
+                    }
+                  />
+                </div>
+              );
+            })}
+          </div>
+        );
+        break;
 
-  useEffect(() => {
-    setAnswer(props.answer.answer) 
-  }, [props.answer])
-  
+      case QuestionType.shortAnswer:
+        ans = (
+          <div>
+            <ShortAnswer
+              answer={props.answers[0]}
+              handleUpdateAnswersCallBack={props.handleUpdateAnswersCallBack}
+            />
+          </div>
+        );
+        break;
 
-  return (
-    <input
-      type="text"
-      className="survey-section-answer"
-      value={answer}
-      onChange={(e) => {
-        setAnswer(e.target.value);
-        props.callback(e.target.value, props.index);
-      }}
-    />
-  );
+      default:
+        break;
+    }
+
+    return ans;
+  };
+
+  return <div>{detectAnswer()}</div>;
 }
 
 export default AnswersSection;
