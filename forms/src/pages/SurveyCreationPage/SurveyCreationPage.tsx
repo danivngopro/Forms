@@ -1,4 +1,4 @@
-import { useCallback, useLayoutEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import SurveySection from "./components/form/SurveySection/SurveySection";
 import SurveyTitle from "./components/form/SurveyTitle/SurveyTitle";
 import "./SurveyCreationPage.scss";
@@ -6,6 +6,7 @@ import plus from "../../assets/plus.svg";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { iQuestion, QuestionType } from "../../interfaces/iQuestion";
 import { iAnswer } from "../../interfaces/iAnswer";
+import { sectionsContext } from "../../context/sectionsContext";
 
 function SurveyCreationPage(props: { surveyName: string }) {
   const mock: iQuestion = {
@@ -13,10 +14,10 @@ function SurveyCreationPage(props: { surveyName: string }) {
     questionName: "מה קורה?",
     questionType: QuestionType.radio,
     answers: [
-      { id: "123456123456123456123456", answer: "בסדר" },
-      { id: "12345612345612345612345a", answer: "" },
-      { id: "12345612345612345612345b", answer: "על הפנים" },
-      { id: "123456123456123456z2345b", answer: "שורד." },
+      { answer: "בסדר" },
+      { answer: "" },
+      { answer: "על הפנים" },
+      { answer: "שורד." },
     ],
   };
 
@@ -26,31 +27,25 @@ function SurveyCreationPage(props: { surveyName: string }) {
     setSections([
       ...sections,
       {
-        id: "123456123456123456123456",
         questionName: "??מה קורה?",
         questionType: QuestionType.checkbox,
         answers: [
-          { id: "123456123456123456123456", answer: "בסדר" },
-          { id: "12345612345612345612345a", answer: "בסדר גמור אפילו" },
-          { id: "12345612345612345612345b", answer: "על הפנים" },
-          { id: "123456123456123456z2345b", answer: "שורד." },
+          { answer: "בסדר" },
+          { answer: "בסדר גמור אפילו" },
+          { answer: "על הפנים" },
+          { answer: "שורד." },
         ],
       },
     ]);
   };
-  let [newSections, setNewSections] = useState([mock]);
 
   const handleOnDragEnd = (result: any) => {
     if (!result.destination) return;
     const items = sections;
     const [recordedItems] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, recordedItems);
-    setNewSections(items);
+    setSections(items);
   };
-
-  useLayoutEffect(() => {
-    setSections(newSections);
-  }, [newSections]);
 
   const handleNewAnswers = useCallback(
     (newAnswers: iAnswer[], i: number) => {
@@ -79,6 +74,27 @@ function SurveyCreationPage(props: { surveyName: string }) {
     [sections]
   );
 
+  const handleAddAnswer = useCallback(
+    (i: number) => {
+      const items = sections as iQuestion[];
+      items[i].answers = [...(items[i].answers as iAnswer[]), { answer: "" }];
+      setSections(items);
+    },
+    [sections]
+  );
+
+  const handleRemoveAnswer = useCallback(
+    (answerIndex: number, questionIndex: number) => {
+      let items = sections;
+      items[questionIndex].answers = [
+        ...(items[questionIndex].answers as iAnswer[]).slice(0, answerIndex),
+        ...(items[questionIndex].answers as iAnswer[]).slice(answerIndex + 1),
+      ];
+      setSections(items);
+    },
+    [sections]
+  );
+
   return (
     <div className="survey-creation-page-container">
       <div className="survey-creation-page-container-without-plus_svg">
@@ -102,13 +118,17 @@ function SurveyCreationPage(props: { surveyName: string }) {
                           {...provided.dragHandleProps}
                           ref={provided.innerRef}
                         >
-                          <SurveySection
-                            section={section}
-                            handleNewAnswers={handleNewAnswers}
-                            handleNewQuestionName={handleNewQuestionName}
-                            handleNewQuestionType={handleNewQuestionType}
-                            index={i}
-                          />
+                          <sectionsContext.Provider value={sections}>
+                            <SurveySection
+                              section={section}
+                              handleNewAnswers={handleNewAnswers}
+                              handleNewQuestionName={handleNewQuestionName}
+                              handleNewQuestionType={handleNewQuestionType}
+                              handleAddAnswer={handleAddAnswer}
+                              handleRemoveAnswer={handleRemoveAnswer}
+                              index={i}
+                            />
+                          </sectionsContext.Provider>
                         </li>
                       )}
                     </Draggable>

@@ -19,6 +19,7 @@ const resources = {
         shortAnswer: 'shortAnswer',
         longAnswer: 'longAnswer',
       },
+      addAnswer: 'add new answer',
     },
   },
   he: {
@@ -35,6 +36,7 @@ const resources = {
         shortAnswer: 'תשובה קצרה',
         longAnswer: 'תשובה ארוכה',
       },
+      addAnswer: 'הוסף אפשרות חדשה',
     },
   },
 };
