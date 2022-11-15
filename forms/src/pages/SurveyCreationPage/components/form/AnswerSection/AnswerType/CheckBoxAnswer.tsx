@@ -1,14 +1,17 @@
 import "./SingleAnswer.scss";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { iAnswer } from "../../../../../../interfaces/iAnswer";
 import Checkbox from "@mui/material/Checkbox";
+import { sectionsContext } from "../../../../../../context/sectionsContext";
 
 function CheckBoxAnswer(props: {
   answer: iAnswer;
   index: number;
-  handleUpdateAnswersCallBack: any;
+  questionIndex: number;
 }) {
+  const sections = useContext(sectionsContext);
+
   const { t } = useTranslation();
   const [answer, setAnswer] = useState(props.answer.answer);
 
@@ -27,7 +30,9 @@ function CheckBoxAnswer(props: {
           value={answer}
           onChange={(e) => {
             setAnswer(e.target.value);
-            props.handleUpdateAnswersCallBack(e.target.value, props.index);
+            const temp = sections[props.questionIndex].answers as iAnswer[];
+            temp[props.index].answer = e.target.value;
+            sections[props.questionIndex].answers = temp;
           }}
         />
       </div>

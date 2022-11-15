@@ -7,13 +7,17 @@ import RadioAnswer from "./AnswerType/RadioAnswer";
 import SelectAnswer from "./AnswerType/SelectAnswer";
 import ShortAnswer from "./AnswerType/ShortAnswer";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import { sectionsContext } from "../../../../../context/sectionsContext";
+import { useContext } from "react";
 
 function AnswersSection(props: {
   answers: iAnswer[];
   questionType: QuestionType;
-  handleUpdateAnswersCallBack: any;
   handleRemoveAnswer: any;
+  questionIndex: number;
 }) {
+  const sections = useContext(sectionsContext);
+
   const detectAnswer = () => {
     let ans = <div></div>;
     switch (props.questionType) {
@@ -23,13 +27,28 @@ function AnswersSection(props: {
             {props.answers?.map((answer, i) => {
               return (
                 <div className="answers-section-answers-container" key={i}>
-                  <div className="answers-section-answers-X-button" onClick={() => {props.handleRemoveAnswer(i)}}><CloseOutlinedIcon /></div>
+                  <div
+                    className="answers-section-answers-X-button"
+                    onClick={() => {
+                      props.handleRemoveAnswer(i);
+
+                      sections[props.questionIndex].answers = [
+                        ...(sections[props.questionIndex].answers as iAnswer[]).slice(
+                          0,
+                          i
+                        ),
+                        ...(sections[props.questionIndex].answers as iAnswer[]).slice(
+                          i + 1
+                        ),
+                      ];
+                    }}
+                  >
+                    <CloseOutlinedIcon />
+                  </div>
                   <CheckBoxAnswer
                     answer={answer}
                     index={i}
-                    handleUpdateAnswersCallBack={
-                      props.handleUpdateAnswersCallBack
-                    }
+                    questionIndex={props.questionIndex}
                   />
                 </div>
               );
@@ -42,7 +61,7 @@ function AnswersSection(props: {
           <div>
             <LongAnswer
               answer={props.answers[0]}
-              handleUpdateAnswersCallBack={props.handleUpdateAnswersCallBack}
+              questionIndex={props.questionIndex}
             />
           </div>
         );
@@ -53,13 +72,28 @@ function AnswersSection(props: {
             {props.answers?.map((answer, i) => {
               return (
                 <div className="answers-section-answers-container" key={i}>
-                  <div className="answers-section-answers-X-button" onClick={() => {props.handleRemoveAnswer(i)}}><CloseOutlinedIcon /></div>
+                  <div
+                    className="answers-section-answers-X-button"
+                    onClick={() => {
+                      props.handleRemoveAnswer(i);
+
+                      sections[props.questionIndex].answers = [
+                        ...(sections[props.questionIndex].answers as iAnswer[]).slice(
+                          0,
+                          i
+                        ),
+                        ...(sections[props.questionIndex].answers as iAnswer[]).slice(
+                          i + 1
+                        ),
+                      ];
+                    }}
+                  >
+                    <CloseOutlinedIcon />
+                  </div>
                   <RadioAnswer
                     answer={answer}
                     index={i}
-                    handleUpdateAnswersCallBack={
-                      props.handleUpdateAnswersCallBack
-                    }
+                    questionIndex={props.questionIndex}
                   />
                 </div>
               );
@@ -74,13 +108,28 @@ function AnswersSection(props: {
             {props.answers?.map((answer, i) => {
               return (
                 <div className="answers-section-answers-container" key={i}>
-                  <div className="answers-section-answers-X-button" onClick={() => {props.handleRemoveAnswer(i)}}><CloseOutlinedIcon /></div>
+                  <div
+                    className="answers-section-answers-X-button"
+                    onClick={() => {
+                      props.handleRemoveAnswer(i);
+
+                      sections[props.questionIndex].answers = [
+                        ...(sections[props.questionIndex].answers as iAnswer[]).slice(
+                          0,
+                          i
+                        ),
+                        ...(sections[props.questionIndex].answers as iAnswer[]).slice(
+                          i + 1
+                        ),
+                      ];
+                    }}
+                  >
+                    <CloseOutlinedIcon />
+                  </div>
                   <SelectAnswer
                     answer={answer}
                     index={i}
-                    handleUpdateAnswersCallBack={
-                      props.handleUpdateAnswersCallBack
-                    }
+                    questionIndex={props.questionIndex}
                   />
                 </div>
               );
@@ -94,7 +143,7 @@ function AnswersSection(props: {
           <div>
             <ShortAnswer
               answer={props.answers[0]}
-              handleUpdateAnswersCallBack={props.handleUpdateAnswersCallBack}
+              questionIndex={props.questionIndex}
             />
           </div>
         );

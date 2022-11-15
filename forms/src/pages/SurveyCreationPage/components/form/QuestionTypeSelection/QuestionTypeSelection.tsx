@@ -1,14 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import { useTranslation } from "react-i18next";
 import { QuestionType } from "../../../../../interfaces/iQuestion";
+import { sectionsContext } from "../../../../../context/sectionsContext";
 
 function QuestionTypeSelection(props: {
   selected: QuestionType;
-  callback: any;
+  handleQuestionTypeChange: any;
+  index: number;
 }) {
+  const sections = useContext(sectionsContext);
   const { t } = useTranslation();
   const [questionType, setQuestionType] = useState("");
 
@@ -17,19 +20,24 @@ function QuestionTypeSelection(props: {
 
     switch (event.target.value) {
       case t("selectQuestionType.checkbox"):
-        props.callback(QuestionType.checkbox);
+        sections[props.index].questionType = (QuestionType.checkbox);
+        props.handleQuestionTypeChange(QuestionType.checkbox)
         break;
       case t("selectQuestionType.longAnswer"):
-        props.callback(QuestionType.longAnswer);
+        sections[props.index].questionType = (QuestionType.longAnswer);
+        props.handleQuestionTypeChange(QuestionType.longAnswer)
         break;
       case t("selectQuestionType.select"):
-        props.callback(QuestionType.select);
+        sections[props.index].questionType = (QuestionType.select);
+        props.handleQuestionTypeChange(QuestionType.select)
         break;
       case t("selectQuestionType.shortAnswer"):
-        props.callback(QuestionType.shortAnswer);
+        sections[props.index].questionType = (QuestionType.shortAnswer);
+        props.handleQuestionTypeChange(QuestionType.shortAnswer)
         break;
       case t("selectQuestionType.radio"):
-        props.callback(QuestionType.radio);
+        sections[props.index].questionType = (QuestionType.radio);
+        props.handleQuestionTypeChange(QuestionType.radio)
         break;
 
       default:

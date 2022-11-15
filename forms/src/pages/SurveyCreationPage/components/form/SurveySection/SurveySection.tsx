@@ -1,24 +1,15 @@
 import "./SurveySection.scss";
 import { iQuestion, QuestionType } from "../../../../../interfaces/iQuestion";
 import { useTranslation } from "react-i18next";
-import { ChangeEvent, useCallback, useContext, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { iAnswer } from "../../../../../interfaces/iAnswer";
 import AnswersSection from "../AnswerSection/AnswersSection";
 import QuestionTypeSelection from "../QuestionTypeSelection/QuestionTypeSelection";
 import Button from "@mui/material/Button";
 import { sectionsContext } from "../../../../../context/sectionsContext";
 
-function SurveySection(props: {
-  section: iQuestion;
-  handleNewAnswers: any;
-  handleNewQuestionName: any;
-  handleNewQuestionType: any;
-  handleAddAnswer: any;
-  handleRemoveAnswer: any;
-  index: number;
-}) {
+function SurveySection(props: { section: iQuestion; index: number }) {
   const sections = useContext(sectionsContext);
-  console.log(sections)
 
   const { t } = useTranslation();
 
@@ -26,43 +17,28 @@ function SurveySection(props: {
   const [questionName, setQuestionName] = useState(props.section.questionName);
   const [answers, setAnswers] = useState(props.section.answers);
 
-  const handleUpdateAnswersCallBack = useCallback(
-    (newAnswer: string, index: number) => {
-      const tempArr = answers as iAnswer[];
-      tempArr[index].answer = newAnswer;
-      setAnswers(tempArr);
-      // props.handleNewAnswers(answers, props.index);
-      sections[props.index].answers = answers;
-    },
-    [answers, props]
-  );
-
-  const handleQuestionTypeSelectionCallBack = useCallback(
-    async (newType: QuestionType) => {
-      await setQuestionType(newType);
-      // props.handleNewQuestionType(newType, props.index);
-      sections[props.index].questionType = newType;
-    },
-    [props]
-  );
-
   const handleQuestionNameCallBack = (e: ChangeEvent<HTMLInputElement>) => {
     setQuestionName(e.target.value);
-    // props.handleNewQuestionName(questionName, props.index);
     sections[props.index].questionName = questionName;
   };
 
   const handleAddAnswer = () => {
-    props.handleAddAnswer(props.index);
+    sections[props.index].answers = [
+      ...(sections[props.index].answers as iAnswer[]),
+      { answer: "" },
+    ];
     setAnswers([...(answers as iAnswer[]), { answer: "" }]);
   };
 
   const handleRemoveAnswer = (answerIndex: number) => {
-    props.handleRemoveAnswer(answerIndex, props.index);
     setAnswers([
       ...(answers as iAnswer[]).slice(0, answerIndex),
       ...(answers as iAnswer[]).slice(answerIndex + 1),
     ]);
+  };
+
+  const handleQuestionTypeChange = (newType: QuestionType) => {
+    setQuestionType(newType);
   };
 
   useEffect(() => {
@@ -71,15 +47,17 @@ function SurveySection(props: {
         setQuestionName(t("newQuestion") as string);
     };
 
-    setQuestionName(props.section.questionName);
-    setQuestionType(props.section.questionType);
-    setAnswers(props.section.answers);
+    setQuestionName(sections[props.index].questionName);
+    setQuestionType(sections[props.index].questionType);
+    setAnswers(sections[props.index].answers);
     checkQuestionName();
   }, [
+    props.index,
     props.section.answers,
     props.section.questionName,
     props.section.questionType,
     questionName,
+    sections,
     t,
   ]);
 
@@ -89,7 +67,8 @@ function SurveySection(props: {
         <div className="survey-section-input_question_type">
           <QuestionTypeSelection
             selected={questionType}
-            callback={handleQuestionTypeSelectionCallBack}
+            handleQuestionTypeChange={handleQuestionTypeChange}
+            index={props.index}
           />
           <span className="survey-section-input_question_type_text">
             {t("questionType")}
@@ -109,8 +88,8 @@ function SurveySection(props: {
       <AnswersSection
         answers={answers as iAnswer[]}
         questionType={questionType}
-        handleUpdateAnswersCallBack={handleUpdateAnswersCallBack}
         handleRemoveAnswer={handleRemoveAnswer}
+        questionIndex={props.index}
       />
       <div className="survey-section_add_answer">
         <Button variant="outlined" onClick={handleAddAnswer}>

@@ -1,21 +1,20 @@
-import './SingleAnswer.scss'
-import { useEffect, useState } from "react";
+import "./SingleAnswer.scss";
+import { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { iAnswer } from '../../../../../../interfaces/iAnswer';
+import { iAnswer } from "../../../../../../interfaces/iAnswer";
+import { sectionsContext } from "../../../../../../context/sectionsContext";
 
-function ShortAnswer(props: {
-  answer: iAnswer;
-  handleUpdateAnswersCallBack: any;
-}) {
+function ShortAnswer(props: { answer: iAnswer; questionIndex: number }) {
+  const sections = useContext(sectionsContext);
+
   const { t } = useTranslation();
   const [answer, setAnswer] = useState(props.answer.answer);
 
   if (!answer || answer === "") setAnswer(t("newAnswer") as string);
 
   useEffect(() => {
-    setAnswer(props.answer.answer) 
-  }, [props.answer])
-  
+    setAnswer(props.answer.answer);
+  }, [props.answer]);
 
   return (
     <input
@@ -24,7 +23,7 @@ function ShortAnswer(props: {
       value={answer}
       onChange={(e) => {
         setAnswer(e.target.value);
-        props.handleUpdateAnswersCallBack(e.target.value, 0);
+        sections[props.questionIndex].answers = [{ answer: e.target.value }];
       }}
     />
   );

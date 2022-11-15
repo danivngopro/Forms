@@ -1,11 +1,10 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import SurveySection from "./components/form/SurveySection/SurveySection";
 import SurveyTitle from "./components/form/SurveyTitle/SurveyTitle";
 import "./SurveyCreationPage.scss";
 import plus from "../../assets/plus.svg";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { iQuestion, QuestionType } from "../../interfaces/iQuestion";
-import { iAnswer } from "../../interfaces/iAnswer";
 import { sectionsContext } from "../../context/sectionsContext";
 
 function SurveyCreationPage(props: { surveyName: string }) {
@@ -47,54 +46,6 @@ function SurveyCreationPage(props: { surveyName: string }) {
     setSections(items);
   };
 
-  const handleNewAnswers = useCallback(
-    (newAnswers: iAnswer[], i: number) => {
-      const items = sections as iQuestion[];
-      items[i].answers = newAnswers;
-      setSections(items);
-    },
-    [sections]
-  );
-
-  const handleNewQuestionName = useCallback(
-    (newQuestionName: string, i: number) => {
-      const items = sections as iQuestion[];
-      items[i].questionName = newQuestionName;
-      setSections(items);
-    },
-    [sections]
-  );
-
-  const handleNewQuestionType = useCallback(
-    (newQuestionType: QuestionType, i: number) => {
-      const items = sections as iQuestion[];
-      items[i].questionType = newQuestionType;
-      setSections(items);
-    },
-    [sections]
-  );
-
-  const handleAddAnswer = useCallback(
-    (i: number) => {
-      const items = sections as iQuestion[];
-      items[i].answers = [...(items[i].answers as iAnswer[]), { answer: "" }];
-      setSections(items);
-    },
-    [sections]
-  );
-
-  const handleRemoveAnswer = useCallback(
-    (answerIndex: number, questionIndex: number) => {
-      let items = sections;
-      items[questionIndex].answers = [
-        ...(items[questionIndex].answers as iAnswer[]).slice(0, answerIndex),
-        ...(items[questionIndex].answers as iAnswer[]).slice(answerIndex + 1),
-      ];
-      setSections(items);
-    },
-    [sections]
-  );
-
   return (
     <div className="survey-creation-page-container">
       <div className="survey-creation-page-container-without-plus_svg">
@@ -121,11 +72,6 @@ function SurveyCreationPage(props: { surveyName: string }) {
                           <sectionsContext.Provider value={sections}>
                             <SurveySection
                               section={section}
-                              handleNewAnswers={handleNewAnswers}
-                              handleNewQuestionName={handleNewQuestionName}
-                              handleNewQuestionType={handleNewQuestionType}
-                              handleAddAnswer={handleAddAnswer}
-                              handleRemoveAnswer={handleRemoveAnswer}
                               index={i}
                             />
                           </sectionsContext.Provider>
