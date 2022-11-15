@@ -39,7 +39,7 @@ function AnswerType({ questionsAndAnswers, handleSubmit }: answerTypeProps) {
       case "radio":
         return (<div className="answers-div">{
           <FormControl component="fieldset">
-            <RadioGroup row aria-label="position" name="answer" defaultValue="top">
+            <RadioGroup aria-label="position" name="answer" defaultValue="top">
               {
                 answers.map((element: any, index: number) => {
                   let indexAsStr = `${(index)}`;
@@ -67,7 +67,7 @@ function AnswerType({ questionsAndAnswers, handleSubmit }: answerTypeProps) {
           <div className="answers-div">
             <input
               type="text"
-              className="survey-section-input_question_name"
+              className="survey-answer-type_short_answer"
               maxLength={70}
               value={shortAnswer}
               onChange={(e) => {
@@ -82,7 +82,7 @@ function AnswerType({ questionsAndAnswers, handleSubmit }: answerTypeProps) {
           <div className="answers-div">
             <input
               type="text"
-              className="survey-section-input_question_name"
+              className="survey-answer-type_long_answer"
               maxLength={1000}
               value={longAnswer}
               onChange={(e) => {
@@ -99,6 +99,7 @@ function AnswerType({ questionsAndAnswers, handleSubmit }: answerTypeProps) {
             <FormControl variant="standard">
               <InputLabel id="demo-simple-select-standard-label">Select</InputLabel>
               <Select
+                className="survey-answer-type_select_answer"
                 labelId="demo-simple-select-standard-label"
                 id="demo-simple-select-standard"
                 value={select}
@@ -125,8 +126,8 @@ function AnswerType({ questionsAndAnswers, handleSubmit }: answerTypeProps) {
       {
         questionsAndAnswers.map((questionAndAnswers, index) => {
           console.log(questionAndAnswers)
-          return <Box className="question-div"key={index}>
-            <Typography>{questionAndAnswers.question}</Typography>
+          return <Box className="question-div" key={index}>
+            <h3>{questionAndAnswers.question}</h3>
             {handleAnswers(questionAndAnswers.questionType, questionAndAnswers.answers, questionAndAnswers.question)}
           </Box>
         })

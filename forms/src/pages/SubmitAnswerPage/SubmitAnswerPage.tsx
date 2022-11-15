@@ -12,32 +12,32 @@ function SurveyCreationPage() {
 
   const [sections, setSections] = React.useState([
     {
-      "question": "checkbox question",
+      "question": "שאלה עם יותר מתשובה אחת אפשרית",
       "answers": ['אורי', 'דניאל', 'שי'],
       "questionType": "checkbox"
     },
     {
-      "question": "shortAnswer question",
+      "question": "שאלה עם תשובה קצרה",
       "answers": ['אבא'],
       "questionType": "shortAnswer"
     },
     {
-      "question": "radio question",
+      "question": "שאלה עם תשובה אחת אפשית",
       "answers": ['בית', 'דלת', 'שולחן'],
       "questionType": "radio"
     },
     {
-      "question": "longAnswer question",
+      "question": "שאלה עם תשובה ארוכה",
       "answers": ['אאאאאאאאאא'],
       "questionType": "longAnswer"
     },
     {
-      "question": "select question",
+      "question": "לבחור תשובה",
       "answers": ['a', 'b', 'c'],
       "questionType": "select"
     },
     {
-      "question": "titel question",
+      "question": "כותרת",
       "answers": ['Uri Goldenberg'],
       "questionType": "title"
     }
