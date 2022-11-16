@@ -19,7 +19,7 @@ function SurveySection(props: { section: iQuestion; index: number }) {
 
   const handleQuestionNameCallBack = (e: ChangeEvent<HTMLInputElement>) => {
     setQuestionName(e.target.value);
-    sections[props.index].questionName = questionName;
+    sections[props.index].questionName = e.target.value;
   };
 
   const handleAddAnswer = () => {
@@ -81,16 +81,17 @@ function SurveySection(props: { section: iQuestion; index: number }) {
           value={questionName}
           onChange={(e) => {
             handleQuestionNameCallBack(e);
-            console.log("123");
           }}
         />
       </div>
-      <AnswersSection
-        answers={answers as iAnswer[]}
-        questionType={questionType}
-        handleRemoveAnswer={handleRemoveAnswer}
-        questionIndex={props.index}
-      />
+      <div className="survey-section-answers-wrapper">
+        <AnswersSection
+          answers={answers as iAnswer[]}
+          questionType={questionType}
+          handleRemoveAnswer={handleRemoveAnswer}
+          questionIndex={props.index}
+        />
+      </div>
       <div className="survey-section_add_answer">
         <Button variant="outlined" onClick={handleAddAnswer}>
           {t("addAnswer")}

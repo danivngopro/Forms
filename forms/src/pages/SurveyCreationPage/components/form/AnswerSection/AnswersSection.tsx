@@ -27,24 +27,23 @@ function AnswersSection(props: {
             {props.answers?.map((answer, i) => {
               return (
                 <div className="answers-section-answers-container" key={i}>
-                  <div
+                  <button
                     className="answers-section-answers-X-button"
                     onClick={() => {
                       props.handleRemoveAnswer(i);
 
                       sections[props.questionIndex].answers = [
-                        ...(sections[props.questionIndex].answers as iAnswer[]).slice(
-                          0,
-                          i
-                        ),
-                        ...(sections[props.questionIndex].answers as iAnswer[]).slice(
-                          i + 1
-                        ),
+                        ...(
+                          sections[props.questionIndex].answers as iAnswer[]
+                        ).slice(0, i),
+                        ...(
+                          sections[props.questionIndex].answers as iAnswer[]
+                        ).slice(i + 1),
                       ];
                     }}
                   >
                     <CloseOutlinedIcon />
-                  </div>
+                  </button>
                   <CheckBoxAnswer
                     answer={answer}
                     index={i}
@@ -72,24 +71,23 @@ function AnswersSection(props: {
             {props.answers?.map((answer, i) => {
               return (
                 <div className="answers-section-answers-container" key={i}>
-                  <div
+                  <button
                     className="answers-section-answers-X-button"
                     onClick={() => {
                       props.handleRemoveAnswer(i);
 
                       sections[props.questionIndex].answers = [
-                        ...(sections[props.questionIndex].answers as iAnswer[]).slice(
-                          0,
-                          i
-                        ),
-                        ...(sections[props.questionIndex].answers as iAnswer[]).slice(
-                          i + 1
-                        ),
+                        ...(
+                          sections[props.questionIndex].answers as iAnswer[]
+                        ).slice(0, i),
+                        ...(
+                          sections[props.questionIndex].answers as iAnswer[]
+                        ).slice(i + 1),
                       ];
                     }}
                   >
                     <CloseOutlinedIcon />
-                  </div>
+                  </button>
                   <RadioAnswer
                     answer={answer}
                     index={i}
@@ -108,24 +106,23 @@ function AnswersSection(props: {
             {props.answers?.map((answer, i) => {
               return (
                 <div className="answers-section-answers-container" key={i}>
-                  <div
+                  <button
                     className="answers-section-answers-X-button"
                     onClick={() => {
                       props.handleRemoveAnswer(i);
 
                       sections[props.questionIndex].answers = [
-                        ...(sections[props.questionIndex].answers as iAnswer[]).slice(
-                          0,
-                          i
-                        ),
-                        ...(sections[props.questionIndex].answers as iAnswer[]).slice(
-                          i + 1
-                        ),
+                        ...(
+                          sections[props.questionIndex].answers as iAnswer[]
+                        ).slice(0, i),
+                        ...(
+                          sections[props.questionIndex].answers as iAnswer[]
+                        ).slice(i + 1),
                       ];
                     }}
                   >
                     <CloseOutlinedIcon />
-                  </div>
+                  </button>
                   <SelectAnswer
                     answer={answer}
                     index={i}
