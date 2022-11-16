@@ -11,4 +11,4 @@ COPY --from=build /app/package*.json ./
 COPY --from=build /app/dist ./dist
 RUN npm run install:prod
 ENTRYPOINT [ "node", "/app/dist/index.js" ]
-EXPOSE 443
+EXPOSE 3000
