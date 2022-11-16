@@ -1,13 +1,13 @@
 .survey-section-container {
-  width: 90%;
+  width: 100%;
   background-color: rgb(255, 255, 255);
   border-radius: 35px;
-  border: 2px solid #9ece5c;
   padding: 2px;
   text-align: right;
   padding-right: 3rem;
   margin-top: 1rem;
   padding-top: .4rem;
+  box-shadow: 1px 2px 4px 1px rgb(131, 131, 131);
 }
 
 .survey-section-input_question_name {
