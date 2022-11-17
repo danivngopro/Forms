@@ -28,7 +28,7 @@
     "env-var": "^7.1.1",
     "express": "^4.17.3",
     "helmet": "^5.0.2",
-    "http": "0.0.1-security",
+    "http": "^0.0.1-security",
     "http-proxy-middleware": "^2.0.6",
     "jayson": "^3.6.6",
     "joi": "^17.6.0",
