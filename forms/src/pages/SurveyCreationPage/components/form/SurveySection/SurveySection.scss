@@ -5,6 +5,7 @@
   padding: 2px;
   text-align: right;
   padding-right: 3rem;
+  padding-left: 3rem;
   margin-top: 1rem;
   padding-top: .4rem;
   box-shadow: 1px 2px 4px 1px rgb(131, 131, 131);
@@ -41,4 +42,11 @@
   margin-bottom: 1rem;
   margin-right: 0.3rem;
   margin-top: 0.2rem;
+}
+
+.survery-section-drag-indicatior-container {
+  display: flex;
+  justify-content: center;
+  transform: rotate(90deg);
+  color: gray;
 }

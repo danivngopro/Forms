@@ -7,6 +7,7 @@ import AnswersSection from "../AnswerSection/AnswersSection";
 import QuestionTypeSelection from "../QuestionTypeSelection/QuestionTypeSelection";
 import Button from "@mui/material/Button";
 import { sectionsContext } from "../../../../../context/sectionsContext";
+import DragIndicatorRoundedIcon from "@mui/icons-material/DragIndicatorRounded";
 
 function SurveySection(props: { section: iQuestion; index: number }) {
   const sections = useContext(sectionsContext);
@@ -63,6 +64,9 @@ function SurveySection(props: { section: iQuestion; index: number }) {
 
   return (
     <div className="survey-section-container">
+      <div className="survery-section-drag-indicatior-container">
+        <DragIndicatorRoundedIcon fontSize="large" color="inherit"/>
+      </div>
       <div className="survey-section-input-type-question-name-container">
         <div className="survey-section-input_question_type">
           <QuestionTypeSelection

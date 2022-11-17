@@ -24,7 +24,7 @@ const resources = {
   },
   he: {
     translation: {
-      newSurvey: "סקר חדש",
+      newSurvey: "סקר ללא כותרת",
       surveyDescription: "תיאור הסקר",
       newQuestion: "כתוב שאלה חדשה",
       newAnswer: "הוסף תשובה",

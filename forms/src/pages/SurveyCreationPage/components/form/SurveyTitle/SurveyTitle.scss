@@ -9,7 +9,7 @@
   padding-top: 1rem;
   background-image: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0) 83%,
+    rgba(0, 0, 0, 0) 87%,
     #7cbddb 20%
   ); /* Standard syntax (must be last) */
 }
@@ -17,11 +17,10 @@
 .survey-title-text-input_survey_name {
   width: 43rem;
   height: 3.5rem;
-  margin-top: 1rem;
+  margin-top: 3rem;
   background-color: white;
   font-size: 3rem;
-  text-align: center;
-  margin-right: 5.7rem;
+  text-align: right;
   margin-bottom: 1rem;
   border: 0;
   outline: 0;
@@ -31,12 +30,11 @@
 .survey-title-text-input_survey_description {
   width: 57rem;
   height: 2.5rem;
-  margin-top: 1rem;
   background-color: white;
   font-size: 1.1rem;
-  text-align: center;
+  text-align: right;
   margin-left: 1.4rem;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   text-justify: distribute;
   border: 0;
   outline: 0;
