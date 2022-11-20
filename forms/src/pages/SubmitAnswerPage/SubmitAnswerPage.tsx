@@ -6,15 +6,16 @@ import React from "react";
 import Typography from "@material-ui/core/Typography";
 import { isPropertySignature } from "typescript";
 import AnswerType from "./components/form/surveyAnswer/answer/AnswerType"
+import { iSurveyQuestions } from "../../interfaces/iSurvey";
 
 
 function SurveyCreationPage() {
 
-  const [sections, setSections] = React.useState([
+  const [sections, setSections] = React.useState(
     {
-      "surveyName": "בדיקה",
-      "creatorId": "123456123456123456123456",
-      "content": [
+      surveyName: "בדיקה",
+      creatorId: "123456123456123456123456",
+      content: [
         {
           "questionName": "הכל טוב?",
           "questionType": "select",
@@ -46,14 +47,14 @@ function SurveyCreationPage() {
           "id": "123456a123456a1234abcde"
         }
       ],
-      "createdAt": "2022-11-16T07:14:19.196Z",
-      "id": "63748dcbecfe357a155cbee3"
+      createdAt: "2022-11-16T07:14:19.196Z",
+      id: "63748dcbecfe357a155cbee3"
     }
-  ]);
+  );
 
   return (
     <div className="survey-creation-page-container" >
-      <AnswerType questionsAndAnswers={sections} handleSubmit={setSections as any} />
+      <AnswerType questionsAndAnswers={sections as unknown as iSurveyQuestions} handleSubmit={setSections as any} />
     </div>
   );
 }

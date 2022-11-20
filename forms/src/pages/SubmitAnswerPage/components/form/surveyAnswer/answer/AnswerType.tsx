@@ -3,39 +3,32 @@ import { Box, Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Rad
 import { useEffect, useState } from 'react';
 import { SelectChangeEvent } from "@mui/material";
 import ReactDOM from "react-dom";
+import { iSurvey, iSurveyQuestions } from "../../../../../../interfaces/iSurvey";
+import { Answer, iSection } from "../../../../../../interfaces/iSection";
 
-
-
-interface answerTypeProps {
-  questionsAndAnswers: any[];
-  handleSubmit: () => any;
-}
-
-function AnswerType({ questionsAndAnswers, handleSubmit }: answerTypeProps) {
+function AnswerType(props: { questionsAndAnswers: iSurveyQuestions, handleSubmit: any }) {
   const [shortAnswer, setShortAnswer] = useState('');
   const [longAnswer, setLongAnswer] = useState('');
-  const [select, setSelect] = useState<string>('');
+  const [select, setSelect] = useState('');
   const [checkbox, setCheckbox] = useState('');
   const [radio, setRadio] = useState('');
-  const [survey, setSurvey] = useState([]);
+
+  const [survey, setSurvey] = useState<iSurvey>({ surveyId: '', userId: '', content: [] });
 
 
 
+  const updateAnswer = (answers: string[], questionIndex: number) => {
+    const tempArr = survey;
+    tempArr.content[questionIndex].answers = answers;
+    console.log(answers);
+  }
 
-  setSelect(select => select + "p")
-
-
-  const handleChange = (event: SelectChangeEvent) => {
+  const handleChange = (event: SelectChangeEvent, questionIndex: number) => {
     setSelect(event.target.value);
+    updateAnswer([event.target.value], questionIndex);
   };
 
-
-  useEffect(() => {
-    
-  }, [shortAnswer, longAnswer, select, checkbox, radio])
-
-
-  const handleAnswers = (type: string, answers: any) => {
+  const handleAnswers = (type: string, answers: any, questionIndex: number) => {
     switch (type) {
       case "checkbox":
         return (<div className="survey-answer-type_answers_div">{
@@ -46,6 +39,7 @@ function AnswerType({ questionsAndAnswers, handleSubmit }: answerTypeProps) {
                 value={checkbox}
                 onClick={(event) => {
                   setCheckbox((event.target as HTMLInputElement).value);
+                  updateAnswer([(event.target as HTMLInputElement).value], questionIndex);
                 }}
                 control={<Checkbox color="primary" />}
                 label={element.answer}
@@ -68,6 +62,7 @@ function AnswerType({ questionsAndAnswers, handleSubmit }: answerTypeProps) {
                       value={radio}
                       onClick={(event) => {
                         setRadio((event.target as HTMLInputElement).value);
+                        updateAnswer([(event.target as HTMLInputElement).value], questionIndex);
                       }}
                       control={<Radio color="primary" />}
                       label={element.answer}
@@ -94,6 +89,7 @@ function AnswerType({ questionsAndAnswers, handleSubmit }: answerTypeProps) {
               value={shortAnswer}
               onChange={(e) => {
                 setShortAnswer(e.target.value);
+                updateAnswer([e.target.value], questionIndex);
               }}
             />
           </div>
@@ -109,6 +105,7 @@ function AnswerType({ questionsAndAnswers, handleSubmit }: answerTypeProps) {
               value={longAnswer}
               onChange={(e) => {
                 setLongAnswer(e.target.value);
+                updateAnswer([e.target.value], questionIndex);
               }}
             />
           </div>
@@ -125,7 +122,9 @@ function AnswerType({ questionsAndAnswers, handleSubmit }: answerTypeProps) {
                 labelId="demo-simple-select-standard-label"
                 id="demo-simple-select-standard"
                 value={select}
-                onChange={(e) => { handleChange(e as SelectChangeEvent) }}
+                onChange={(e) => {
+                  handleChange(e as SelectChangeEvent, questionIndex);
+                }}
                 label="select"
               >
                 {
@@ -143,27 +142,28 @@ function AnswerType({ questionsAndAnswers, handleSubmit }: answerTypeProps) {
     }
   }
 
+  useEffect(() => {
+    const surveySetup = () => {
+      const temp: iSection[] = [];
+      props.questionsAndAnswers.content.map((question) => temp.push({ questionId: question.id as string, answers: [] }))
+      setSurvey({ surveyId: props.questionsAndAnswers.id, userId: '123421342134213421342134', content: temp });
+    }
 
+    surveySetup();
+
+  }, []);
 
 
 
   return (
-    <>
-      {
-        questionsAndAnswers.map((questionAndAnswers, index) => {
-          return (
-            <div key={index}>
-              {questionAndAnswers.content.map((questions: any, i: number) => {
-                return <Box className="survey-answer-type_questions_div" key={`surveyבםמדא${i}`}>
-                  <h3>{questions.questionName}</h3>
-                  {handleAnswers(questions.questionType, questions.answers)}
-                </Box>
-              })}
-            </div>
-          )
-        })
-      }
-    </>
+    <div>
+      {props.questionsAndAnswers.content.map((questions: any, i: number) => {
+        return <Box className="survey-answer-type_questions_div" key={`surveyבםמדא${i}`}>
+          <h3>{questions.questionName}</h3>
+          {handleAnswers(questions.questionType, questions.answers, i)}
+        </Box>
+      })}
+    </div>
   )
 
 
