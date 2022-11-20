@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { AnswerRouter } from './answers/answers.router';
+import { compositorRouter } from './compositor/compositor.router';
 
 const AppRouter: Router = Router();
 
-AppRouter.use('/api/answers', AnswerRouter);
+AppRouter.use('/api/compositor', compositorRouter);
 
 AppRouter.use('/isalive', (_req, res) => {
   res.status(200).send('alive');

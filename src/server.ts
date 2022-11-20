@@ -28,15 +28,27 @@ export class Server {
     this.app.use(AppRouter);
     this.app.use(errorMiddleware);
     this.server = this.app.listen(config.server.port, () => {
-      logger.log(SeverityLevel.Informational, `${config.server.name} listening on port ${config.server.port}`);
+      logger.log(
+        SeverityLevel.Informational,
+        `${config.server.name} listening on port ${config.server.port}`
+      );
     });
   }
 
-  private setHeaders = (req: express.Request, res: express.Response,
-    next: express.NextFunction) => {
+  private setHeaders = (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) => {
     res.setHeader('Access-Control-Allow-Credentials', 'true');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Authorization, Origin, X-Requested-With, Content-Type');
+    res.setHeader(
+      'Access-Control-Allow-Methods',
+      'GET, POST, OPTIONS, PUT, PATCH, DELETE'
+    );
+    res.setHeader(
+      'Access-Control-Allow-Headers',
+      'Authorization, Origin, X-Requested-With, Content-Type'
+    );
 
     if (req.method === 'OPTIONS') {
       return res.status(200).end();

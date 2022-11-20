@@ -1,20 +1,23 @@
 import { Router } from 'express';
 import { wrapAsync } from '../utils/wrapper';
-// import { ValidateRequest } from '../utils/joi';
-// import { compositorController } from './compositor.controller';
-// import { postSurveySchema, getSurveySchema } from './validator/answers.schema';
+import { CompositorController } from './compositor.controller';
+import { ValidateRequest } from '../utils/joi';
+import {
+  deleteSurveySchema,
+  getSurveyResultsSchema,
+} from './validator/compositor.schema';
 
 const compositorRouter: Router = Router();
 
 compositorRouter.delete(
-  '/deleteSurvey/:id',
-  // ValidateRequest(postSurveySchema),
-  wrapAsync(compositorController.deleteSurvey)
+  '/deleteSurvey/:id/id',
+  ValidateRequest(deleteSurveySchema),
+  wrapAsync(CompositorController.deleteSurvey)
 );
 compositorRouter.get(
-  '/getSurveyResults/:id',
-  // ValidateRequest(getSurveySchema),
-  wrapAsync(AnswerController.getSurveyResults)
+  '/getSurveyResults/:id/id',
+  ValidateRequest(getSurveyResultsSchema),
+  wrapAsync(CompositorController.getSurveyResults)
 );
 
 export { compositorRouter };
