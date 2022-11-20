@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
 import * as mongoose from 'mongoose';
-import { iSurvey } from './answers.interface';
+import { ISurvey } from './answers.interface';
 
 const sectionSchema: mongoose.Schema = new mongoose.Schema({
   questionId: {
@@ -53,4 +53,4 @@ const answerSchema: mongoose.Schema = new mongoose.Schema({
 
 answerSchema.index({ surveyId: 1, userId: 1 });
 
-export const AnswerModel = mongoose.model<iSurvey & mongoose.Document>('iSurvey', answerSchema);
+export const AnswerModel = mongoose.model<ISurvey & mongoose.Document>('iSurvey', answerSchema);

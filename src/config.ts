@@ -5,7 +5,7 @@ dotenv.config();
 
 export const config = {
   server: {
-    name: 'users-crud',
+    name: 'ansewrs-crud',
     port: env.get('APPLICATION_PORT').default(3001).asPortNumber(),
   },
   db: {
@@ -13,7 +13,7 @@ export const config = {
       .default('mongodb://localhost:27017')
       .asString(),
     dbName: env.get('USER_DB_NAME')
-      .default('users-crud')
+      .default('ansewrs-crud')
       .asString(),
   },
 };

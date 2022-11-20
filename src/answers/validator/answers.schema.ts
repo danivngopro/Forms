@@ -3,7 +3,7 @@ import * as Joi from 'joi';
 const iSection = Joi.object({
   questionId: Joi.string().required(),
   answers: Joi.array().items(Joi.string()).required(),
-})
+});
 
 const surveySchema = Joi.object({
   surveyId: Joi.string().hex().length(24).required(),
@@ -13,7 +13,7 @@ const surveySchema = Joi.object({
 
 const surveyIdSchema = Joi.object({
   surveyId: Joi.string().required(),
-})
+});
 
 export const postSurveySchema = Joi.object({
   body: surveySchema,

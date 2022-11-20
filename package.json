@@ -1,7 +1,7 @@
 {
-  "name": "users-service",
+  "name": "ansewrs-service",
   "version": "0.0.7",
-  "description": "Users Service",
+  "description": "Ansewrs Service",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/yesodot/selenium/blueomek/users-service.git"
+    "url": "https://gitlab.com/yesodot/selenium/blueomek/ansewrs-service.git"
   },
   "author": "Daniel Ventura",
   "license": "ISC",

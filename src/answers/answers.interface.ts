@@ -1,10 +1,10 @@
-export interface iSurvey {
+export interface ISurvey {
   surveyId: string;
   userId: string;
-  content: Array<iSection>;
+  content: Array<ISection>;
 }
 
-export interface iSection {
+export interface ISection {
   questionId: string;
-  answers: Array<String>;
+  answers: Array<string>;
 }
