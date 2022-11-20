@@ -12,14 +12,18 @@
 }
 
 .survey-section-input_question_name {
-  width: 43rem;
+  width: 40rem;
   height: 3.5rem;
-  background-color: white;
+  background-color: #f9f8fb;
   font-size: 2rem;
   text-align: right;
   border: 0;
   outline: 0;
   background: transparent;
+}
+
+.survey-section-input_question_name:focus{
+  border-bottom: 2px solid #568ea8;
 }
 
 .survey-section-input_question_type {
@@ -35,7 +39,7 @@
 
 .survey-section-input-type-question-name-container {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 
 .survey-section_add_answer {
