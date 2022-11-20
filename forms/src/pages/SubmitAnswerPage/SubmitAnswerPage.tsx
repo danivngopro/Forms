@@ -12,34 +12,42 @@ function SurveyCreationPage() {
 
   const [sections, setSections] = React.useState([
     {
-      "question": "שאלה עם יותר מתשובה אחת אפשרית",
-      "answers": ['אורי', 'דניאל', 'שי'],
-      "questionType": "checkbox"
-    },
-    {
-      "question": "שאלה עם תשובה קצרה",
-      "answers": ['אבא'],
-      "questionType": "shortAnswer"
-    },
-    {
-      "question": "שאלה עם תשובה אחת אפשית",
-      "answers": ['בית', 'דלת', 'שולחן'],
-      "questionType": "radio"
-    },
-    {
-      "question": "שאלה עם תשובה ארוכה",
-      "answers": ['אאאאאאאאאא'],
-      "questionType": "longAnswer"
-    },
-    {
-      "question": "לבחור תשובה",
-      "answers": ['a', 'b', 'c'],
-      "questionType": "select"
-    },
-    {
-      "question": "כותרת",
-      "answers": ['Uri Goldenberg'],
-      "questionType": "title"
+      "surveyName": "בדיקה",
+      "creatorId": "123456123456123456123456",
+      "content": [
+        {
+          "questionName": "הכל טוב?",
+          "questionType": "select",
+          "answers": [     
+            {
+              "answer": "כן",
+              "id": "123412341234123412341234"
+            },
+            {
+              "answer": "לא",
+              "id": "12341234123412341234123a"
+            }
+          ],
+          "id": "123456a123456a12346abcd"
+        },
+        {
+          "questionName": "הכל בסדר?",
+          "questionType": "radio",
+          "answers": [
+            {
+              "answer": "בטח",
+              "id": "1234123412341234123412ab"
+            },
+            {
+              "answer": "לא",
+              "id": "12341234123412341234abab"
+            }
+          ],
+          "id": "123456a123456a1234abcde"
+        }
+      ],
+      "createdAt": "2022-11-16T07:14:19.196Z",
+      "id": "63748dcbecfe357a155cbee3"
     }
   ]);
 

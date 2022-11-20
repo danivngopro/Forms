@@ -1,7 +1,9 @@
 import "./AnswerType.scss";
-import { Box, Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, Typography } from "@material-ui/core";
-import { useState } from 'react';
+import { Box, Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, TextareaAutosize } from "@material-ui/core";
+import { useEffect, useState } from 'react';
 import { SelectChangeEvent } from "@mui/material";
+import ReactDOM from "react-dom";
+
 
 
 interface answerTypeProps {
@@ -12,23 +14,41 @@ interface answerTypeProps {
 function AnswerType({ questionsAndAnswers, handleSubmit }: answerTypeProps) {
   const [shortAnswer, setShortAnswer] = useState('');
   const [longAnswer, setLongAnswer] = useState('');
-  const [select, setSelect] = useState('');
+  const [select, setSelect] = useState<string>('');
+  const [checkbox, setCheckbox] = useState('');
+  const [radio, setRadio] = useState('');
+  const [survey, setSurvey] = useState([]);
+
+
+
+
+  setSelect(select => select + "p")
+
 
   const handleChange = (event: SelectChangeEvent) => {
     setSelect(event.target.value);
   };
 
-  const handleAnswers = (type: string, answers: any[], question: string) => {
+
+  useEffect(() => {
+    
+  }, [shortAnswer, longAnswer, select, checkbox, radio])
+
+
+  const handleAnswers = (type: string, answers: any) => {
     switch (type) {
       case "checkbox":
-        return (<div className="answers-div">{
+        return (<div className="survey-answer-type_answers_div">{
           answers.map((element: any, index: number) => {
             return (
               <FormControlLabel
                 key={index}
-                value={index}
+                value={checkbox}
+                onClick={(event) => {
+                  setCheckbox((event.target as HTMLInputElement).value);
+                }}
                 control={<Checkbox color="primary" />}
-                label={element}
+                label={element.answer}
                 labelPlacement="start" />
             )
           })
@@ -37,18 +57,20 @@ function AnswerType({ questionsAndAnswers, handleSubmit }: answerTypeProps) {
         }</div>)
 
       case "radio":
-        return (<div className="answers-div">{
-          <FormControl component="fieldset">
+        return (<div className="survey-answer-type_answers_div">{
+          <FormControl>
             <RadioGroup aria-label="position" name="answer" defaultValue="top">
               {
                 answers.map((element: any, index: number) => {
-                  let indexAsStr = `${(index)}`;
                   return (
                     <FormControlLabel
                       key={index}
-                      value={indexAsStr}
+                      value={radio}
+                      onClick={(event) => {
+                        setRadio((event.target as HTMLInputElement).value);
+                      }}
                       control={<Radio color="primary" />}
-                      label={element}
+                      label={element.answer}
                       labelPlacement="start"
                     />
 
@@ -64,11 +86,11 @@ function AnswerType({ questionsAndAnswers, handleSubmit }: answerTypeProps) {
 
       case "shortAnswer":
         return (
-          <div className="answers-div">
-            <input
-              type="text"
+          <div className="survey-answer-type_answers_div" dir="rtl">
+            <TextareaAutosize
               className="survey-answer-type_short_answer"
               maxLength={70}
+              minRows={1}
               value={shortAnswer}
               onChange={(e) => {
                 setShortAnswer(e.target.value);
@@ -79,11 +101,11 @@ function AnswerType({ questionsAndAnswers, handleSubmit }: answerTypeProps) {
 
       case "longAnswer":
         return (
-          <div className="answers-div">
-            <input
-              type="text"
+          <div className="survey-answer-type_answers_div" dir="rtl">
+            <TextareaAutosize
               className="survey-answer-type_long_answer"
               maxLength={1000}
+              minRows={4}
               value={longAnswer}
               onChange={(e) => {
                 setLongAnswer(e.target.value);
@@ -94,7 +116,7 @@ function AnswerType({ questionsAndAnswers, handleSubmit }: answerTypeProps) {
         )
 
       case "select":
-        return (<div className="answers-div">
+        return (<div className="survey-answer-type_answers_div">
           {
             <FormControl variant="standard">
               <InputLabel id="demo-simple-select-standard-label">Select</InputLabel>
@@ -109,7 +131,7 @@ function AnswerType({ questionsAndAnswers, handleSubmit }: answerTypeProps) {
                 {
                   answers.map((element: any, index: number) => {
                     return (
-                      < MenuItem value={element} key={index}> {element}</MenuItem>
+                      < MenuItem value={element.answer} key={index}> {element.answer} </MenuItem>
                     )
                   })
                 }
@@ -121,15 +143,24 @@ function AnswerType({ questionsAndAnswers, handleSubmit }: answerTypeProps) {
     }
   }
 
+
+
+
+
   return (
     <>
       {
         questionsAndAnswers.map((questionAndAnswers, index) => {
-          console.log(questionAndAnswers)
-          return <Box className="question-div" key={index}>
-            <h3>{questionAndAnswers.question}</h3>
-            {handleAnswers(questionAndAnswers.questionType, questionAndAnswers.answers, questionAndAnswers.question)}
-          </Box>
+          return (
+            <div key={index}>
+              {questionAndAnswers.content.map((questions: any, i: number) => {
+                return <Box className="survey-answer-type_questions_div" key={`surveyבםמדא${i}`}>
+                  <h3>{questions.questionName}</h3>
+                  {handleAnswers(questions.questionType, questions.answers)}
+                </Box>
+              })}
+            </div>
+          )
         })
       }
     </>
