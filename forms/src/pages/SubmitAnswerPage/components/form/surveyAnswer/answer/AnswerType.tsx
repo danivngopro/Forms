@@ -20,7 +20,7 @@ function AnswerType(props: { questionsAndAnswers: iSurveyQuestions, handleSubmit
   const updateAnswer = (answers: string[], questionIndex: number) => {
     const tempArr = survey;
     tempArr.content[questionIndex].answers = answers;
-    console.log(answers);
+    setSurvey(tempArr);
   }
 
   const handleChange = (event: SelectChangeEvent, questionIndex: number) => {
